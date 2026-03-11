@@ -1,11 +1,13 @@
+import Intro from "@/sections/Intro";
+
 export default function Home() {
   const sectionClassName =
     "mx-auto min-h-screen max-w-5xl scroll-mt-16 px-6 py-24";
 
   return (
     <main>
-      <section id="intro" className={sectionClassName}>
-        <h1>Intro</h1>
+      <section id="intro">
+        <Intro />
       </section>
 
       <section id="profile" className={sectionClassName}>

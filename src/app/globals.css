@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --color-nav-bg: rgba(2, 8, 23, 0.8);
+  --color-nav-border: rgba(255, 255, 255, 0.1);
+  --color-nav-text: #ffffff;
+  --color-nav-text-muted: #cbd5e1;
+  --color-nav-pill: #334155;
+  --color-nav-hover: #1e293b;
 }
 
 @theme inline {

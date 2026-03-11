@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const navItems = [
-  { label: "Intro", href: "#intro", id: "intro" },
   { label: "Profile", href: "#profile", id: "profile" },
   { label: "Skills", href: "#skills", id: "skills" },
   { label: "Experience", href: "#experience", id: "experience" },
@@ -12,7 +11,7 @@ const navItems = [
 ];
 
 export default function Navigation() {
-  const [activeSection, setActiveSection] = useState("intro");
+  const [activeSection, setActiveSection] = useState("profile");
 
   useEffect(() => {
     const sections = navItems

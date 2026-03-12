@@ -1,4 +1,5 @@
 import Intro from "@/sections/Intro";
+import Profile from "@/sections/Profile";
 
 export default function Home() {
   const sectionClassName =
@@ -10,8 +11,8 @@ export default function Home() {
         <Intro />
       </section>
 
-      <section id="profile" className={sectionClassName}>
-        <h1>Profile</h1>
+      <section id="profile">
+        <Profile />
       </section>
 
       <section id="skills" className={sectionClassName}>

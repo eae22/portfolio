@@ -4,21 +4,21 @@ export default function Intro() {
       id="intro"
       className="mx-auto flex min-h-screen max-w-5xl scroll-mt-16 flex-col items-center justify-center px-6 text-center"
     >
-      <div className="mb-6 rounded-full bg-slate-800 px-5 py-2 text-sm text-slate-300">
+      <div className="mb-6 rounded-full bg-(--color-intro-badge-bg) px-5 py-2 text-sm text-(--color-nav-text-muted)">
         👋 Welcome to my portfolio
       </div>
       <h1 className="mb-8 text-5xl font-bold leading-tight md:text-7xl">
         한 줄 소개가 들어갈 자리
       </h1>
-      <p className="mb-1 text-lg text-slate-300 md:text-xl">
+      <p className="mb-1 text-lg text-(--color-nav-text-muted) md:text-xl">
         여기에 간단한 자기소개 문장이 들어갑니다.
       </p>
-      <p className="mb-7 text-lg text-slate-300 md:text-xl">
+      <p className="mb-7 text-lg text-(--color-nav-text-muted) md:text-xl">
         두 줄 정도의 간단한 소개 텍스트를 배치할 예정입니다.
       </p>
       <a
         href="#contact"
-        className="rounded-full bg-slate-700 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-600"
+        className="rounded-full bg-(--color-intro-button-bg) px-6 py-2.5 text-sm font-semibold text-(--color-nav-text) transition-colors hover:bg-(--color-intro-button-hover)"
       >
         Contact me →
       </a>

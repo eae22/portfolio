@@ -16,6 +16,14 @@
   --color-intro-badge-bg: #1e293b;
   --color-intro-button-bg: #334155;
   --color-intro-button-hover: #475569;
+
+  /* profile */
+  --color-profile-card-bg: #0f172a;
+  --color-profile-card-border: rgba(255, 255, 255, 0.1);
+  --color-profile-button-bg: #0b1530;
+  --color-profile-button-hover: #162447;
+  --color-profile-blog-bg: #3a4a68;
+  --color-profile-blog-hover: #4a5d80;
 }
 
 @theme inline {

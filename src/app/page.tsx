@@ -7,22 +7,14 @@ export default function Home() {
 
   return (
     <main>
-      <section id="intro">
-        <Intro />
-      </section>
-
-      <section id="profile">
-        <Profile />
-      </section>
-
+      <Intro />
+      <Profile />
       <section id="skills" className={sectionClassName}>
         <h1>Skills</h1>
       </section>
-
       <section id="experience" className={sectionClassName}>
         <h1>Experience</h1>
       </section>
-
       <section id="contact" className={sectionClassName}>
         <h1>Contact</h1>
       </section>

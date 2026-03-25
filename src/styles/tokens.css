@@ -1,0 +1,51 @@
+:root {
+  color-scheme: dark;
+
+  /* base */
+  --background: #020817;
+  --foreground: #ffffff;
+
+  /* text */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+
+  /* surface */
+  --color-bg-canvas: #020817;
+  --color-surface-nav: rgb(2 8 23 / 0.8);
+  --color-surface-card: #0f172a;
+  --color-surface-badge: #1e293b;
+  --color-surface-pill: #334155;
+  --color-surface-pill-hover: #475569;
+  --color-surface-secondary: #0b1530;
+  --color-surface-secondary-hover: #162447;
+
+  /* border */
+  --color-border-subtle: rgb(255 255 255 / 0.1);
+  --color-border-strong: rgb(255 255 255 / 0.16);
+
+  /* radius */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  /* shadow */
+  --shadow-card: 0 8px 24px rgb(0 0 0 / 0.12);
+
+  /* motion */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --ease-standard: ease;
+
+  /* typography */
+  --font-size-hero: 4rem;
+  --font-size-body-lg: 1.25rem;
+  --font-size-section-title: 1rem;
+  --letter-spacing-section: 0.08em;
+
+  /* font */
+  --font-family-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --font-family-mono: var(--font-geist-mono), monospace;
+}

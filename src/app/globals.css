@@ -1,43 +1,12 @@
+@import "../styles/tokens.css";
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-
-  /* navigation */
-  --color-nav-bg: rgba(2, 8, 23, 0.8);
-  --color-nav-border: rgba(255, 255, 255, 0.1);
-  --color-nav-text: #ffffff;
-  --color-nav-text-muted: #cbd5e1;
-  --color-nav-pill: #334155;
-  --color-nav-hover: #1e293b;
-
-  /* intro */
-  --color-intro-badge-bg: #1e293b;
-  --color-intro-button-bg: #334155;
-  --color-intro-button-hover: #475569;
-
-  /* profile */
-  --color-profile-card-bg: #0f172a;
-  --color-profile-card-border: rgba(255, 255, 255, 0.1);
-  --color-profile-button-bg: #0b1530;
-  --color-profile-button-hover: #162447;
-  --color-profile-blog-bg: #3a4a68;
-  --color-profile-blog-hover: #4a5d80;
-}
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-family-sans);
+  --font-mono: var(--font-family-mono);
 }
 
 html {
@@ -45,7 +14,8 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
 }

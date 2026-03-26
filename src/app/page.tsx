@@ -1,4 +1,4 @@
-import SectionLayout from "@/components/SectionLayout";
+import Contact from "@/sections/Contact";
 import Experience from "@/sections/Experience";
 import Intro from "@/sections/Intro";
 import Profile from "@/sections/Profile";
@@ -11,9 +11,7 @@ export default function Home() {
       <Profile />
       <Skills />
       <Experience />
-      <SectionLayout id="contact" fullHeight>
-        <h1>Contact</h1>
-      </SectionLayout>
+      <Contact />
     </main>
   );
 }

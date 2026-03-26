@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { skillCategories, skills, type SkillCategory } from "@/content/skills";
+import { type SkillCategory, skillCategories, skills } from "@/content/skills";
 
 export default function Skills() {
   const [selected, setSelected] = useState<SkillCategory>("all");

@@ -1,23 +1,21 @@
+import SectionLayout from "@/components/SectionLayout";
 import Intro from "@/sections/Intro";
 import Profile from "@/sections/Profile";
 
 export default function Home() {
-  const sectionClassName =
-    "mx-auto min-h-screen max-w-5xl scroll-mt-16 px-6 py-24";
-
   return (
     <main>
       <Intro />
       <Profile />
-      <section id="skills" className={sectionClassName}>
+      <SectionLayout id="skills" fullHeight>
         <h1>Skills</h1>
-      </section>
-      <section id="experience" className={sectionClassName}>
+      </SectionLayout>
+      <SectionLayout id="experience" fullHeight>
         <h1>Experience</h1>
-      </section>
-      <section id="contact" className={sectionClassName}>
+      </SectionLayout>
+      <SectionLayout id="contact" fullHeight>
         <h1>Contact</h1>
-      </section>
+      </SectionLayout>
     </main>
   );
 }

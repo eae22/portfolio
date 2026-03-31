@@ -1,8 +1,12 @@
+import PillLink from "@/components/PillLink";
+import SectionLayout from "@/components/SectionLayout";
+
 export default function Intro() {
   return (
-    <section
+    <SectionLayout
       id="intro"
-      className="mx-auto flex min-h-screen max-w-5xl scroll-mt-16 flex-col items-center justify-center px-6 text-center"
+      fullHeight
+      className="flex flex-col items-center justify-center text-center"
     >
       <div className="mb-6 rounded-full bg-surface-badge px-5 py-2 text-sm text-text-secondary">
         👋 Welcome to my portfolio
@@ -19,12 +23,9 @@ export default function Intro() {
         두 줄 정도의 간단한 소개 텍스트를 배치할 예정입니다.
       </p>
 
-      <a
-        href="#contact"
-        className="rounded-full bg-surface-pill px-6 py-2.5 text-sm font-semibold text-text-primary transition-colors hover:bg-surface-pill-hover"
-      >
+      <PillLink href="#contact" className="px-6 py-2.5">
         Contact me →
-      </a>
-    </section>
+      </PillLink>
+    </SectionLayout>
   );
 }

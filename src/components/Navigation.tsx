@@ -44,16 +44,13 @@ export default function Navigation() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-(--color-border-subtle) bg-(--color-surface-nav) backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-border-subtle bg-surface-nav backdrop-blur">
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <Link
-          className="my-1 text-lg font-bold text-(--color-text-primary)"
-          href="/"
-        >
+        <Link className="my-1 text-lg font-bold text-text-primary" href="/">
           Portfolio
         </Link>
 
-        <ul className="flex items-center gap-6 text-sm font-medium text-(--color-text-secondary)">
+        <ul className="flex items-center gap-6 text-sm font-medium text-text-secondary">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
 
@@ -63,8 +60,8 @@ export default function Navigation() {
                   href={item.href}
                   className={`rounded-full px-5 py-2.5 transition-all duration-200 ${
                     isActive
-                      ? "bg-(--color-surface-pill) text-(--color-text-primary)"
-                      : "text-(--color-text-secondary) hover:bg-(--color-surface-badge) hover:text-(--color-text-primary)"
+                      ? "bg-surface-pill text-text-primary"
+                      : "text-text-secondary hover:bg-surface-badge hover:text-text-primary"
                   }`}
                 >
                   {item.label}

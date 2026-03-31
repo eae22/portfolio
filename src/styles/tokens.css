@@ -1,10 +1,9 @@
 :root {
   color-scheme: dark;
+  --copy-pop-distance: -4px;
+}
 
-  /* base */
-  --background: #020817;
-  --foreground: #ffffff;
-
+@theme inline {
   /* text */
   --color-text-primary: #ffffff;
   --color-text-secondary: #cbd5e1;
@@ -23,6 +22,7 @@
   /* border */
   --color-border-subtle: rgb(255 255 255 / 0.1);
   --color-border-strong: rgb(255 255 255 / 0.16);
+  --color-border-accent: rgb(96 165 250 / 0.8);
 
   /* radius */
   --radius-sm: 12px;
@@ -37,15 +37,23 @@
   --duration-fast: 150ms;
   --duration-normal: 250ms;
   --duration-slow: 400ms;
+  --duration-emphasis: 600ms;
+
   --ease-standard: ease;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* typography */
-  --font-size-hero: 4rem;
-  --font-size-body-lg: 1.25rem;
-  --font-size-section-title: 1rem;
-  --letter-spacing-section: 0.08em;
+  --text-hero: 4rem;
+  --text-body-lg: 1.25rem;
+  --text-section-title: 1rem;
+  --tracking-section: 0.08em;
 
   /* font */
-  --font-family-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-  --font-family-mono: var(--font-geist-mono), monospace;
+  --font-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+
+  /* contact / accent */
+  --color-bg-inverse: #ffffff;
+  --color-text-on-inverse: #334155;
 }

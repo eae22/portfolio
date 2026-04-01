@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowUpRight,
   CodeXml,
   GraduationCap,
   type LucideIcon,
@@ -98,6 +99,10 @@ export default function Experience() {
                 ))}
               </div>
             ) : null}
+
+            <div className={styles.cardLink} aria-hidden="true">
+              <ArrowUpRight className={styles.cardLinkArrow} />
+            </div>
           </article>
         ))}
       </div>

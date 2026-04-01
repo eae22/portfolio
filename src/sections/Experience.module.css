@@ -48,7 +48,6 @@
       color-mix(in srgb, var(--color-surface-secondary) 94%, black 6%)
     );
   box-shadow: var(--experience-card-shadow);
-  animation: experience-card-enter var(--duration-emphasis) var(--ease-out) both;
   overflow: hidden;
   transition:
     transform var(--duration-normal) var(--ease-out),
@@ -265,18 +264,6 @@
   color: color-mix(in srgb, var(--experience-accent-soft) 46%, white 54%);
 }
 
-@keyframes experience-card-enter {
-  from {
-    opacity: 0;
-    transform: translateY(var(--experience-enter-distance));
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes experience-category-badge-pulse {
   0%,
   100% {
@@ -314,7 +301,10 @@
   .iconTile,
   .iconGlyph,
   .categoryBadge {
-    animation: none;
     transition-duration: 0ms;
+  }
+
+  .card:hover {
+    transform: none;
   }
 }

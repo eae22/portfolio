@@ -1,6 +1,7 @@
 "use client";
 
 import { type CSSProperties, useState } from "react";
+import ScrollReveal from "@/components/ScrollReveal";
 import SectionFilter from "@/components/SectionFilter";
 import SectionHeader from "@/components/SectionHeader";
 import SectionLayout from "@/components/SectionLayout";
@@ -66,20 +67,26 @@ export default function Skills() {
 
   return (
     <SectionLayout id="skills" className={styles.section}>
-      <SectionHeader title="SKILLS" />
+      <ScrollReveal delay={80}>
+        <SectionHeader title="SKILLS" />
+      </ScrollReveal>
 
-      <SectionFilter
-        ariaLabel="Filter skills by category"
-        options={skillCategories}
-        selected={selected}
-        onChange={setSelected}
-      />
+      <ScrollReveal delay={220}>
+        <SectionFilter
+          ariaLabel="Filter skills by category"
+          options={skillCategories}
+          selected={selected}
+          onChange={setSelected}
+        />
+      </ScrollReveal>
 
       <div className={styles.skillsGrid}>
         {filteredSkills.map((skill, index) => (
-          <div
+          <ScrollReveal
+            as="div"
             key={`${selected}-${skill.name}`}
             className={styles.skillChip}
+            delay={340 + index * 70}
             style={getSkillChipStyle(
               skill.accent,
               skill.secondaryAccent,
@@ -90,7 +97,7 @@ export default function Skills() {
               <SkillIcons icon={skill.icon} name={skill.name} />
             </div>
             {skill.name}
-          </div>
+          </ScrollReveal>
         ))}
       </div>
     </SectionLayout>

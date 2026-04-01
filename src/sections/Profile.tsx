@@ -1,13 +1,19 @@
 import PillLink from "@/components/PillLink";
+import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeader from "@/components/SectionHeader";
 import SectionLayout from "@/components/SectionLayout";
 
 export default function Profile() {
   return (
     <SectionLayout id="profile">
-      <SectionHeader title="PROFILE" />
+      <ScrollReveal delay={80}>
+        <SectionHeader title="PROFILE" />
+      </ScrollReveal>
 
-      <div className="mx-auto max-w-302.5 rounded-4xl border border-border-subtle bg-surface-card px-16 pt-16 pb-12 shadow-lg">
+      <ScrollReveal
+        delay={240}
+        className="mx-auto max-w-302.5 rounded-4xl border border-border-subtle bg-surface-card px-16 pt-16 pb-12 shadow-lg"
+      >
         <div className="mx-auto grid max-w-3xl grid-cols-2 gap-16">
           <div className="space-y-5 text-right">
             <h3 className="text-lg font-semibold text-text-primary">
@@ -47,7 +53,7 @@ export default function Profile() {
             Blog →
           </PillLink>
         </div>
-      </div>
+      </ScrollReveal>
     </SectionLayout>
   );
 }

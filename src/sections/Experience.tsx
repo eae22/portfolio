@@ -10,6 +10,7 @@ import {
   Users,
 } from "lucide-react";
 import { useState } from "react";
+import ScrollReveal from "@/components/ScrollReveal";
 import SectionFilter from "@/components/SectionFilter";
 import SectionHeader from "@/components/SectionHeader";
 import SectionLayout from "@/components/SectionLayout";
@@ -52,22 +53,27 @@ export default function Experience() {
 
   return (
     <SectionLayout id="experience" className={styles.section}>
-      <SectionHeader title="EXPERIENCE" />
+      <ScrollReveal delay={80}>
+        <SectionHeader title="EXPERIENCE" />
+      </ScrollReveal>
 
-      <SectionFilter
-        ariaLabel="Filter experiences by category"
-        options={experienceCategories}
-        selected={selected}
-        onChange={setSelected}
-        layout="scroll"
-      />
+      <ScrollReveal delay={220}>
+        <SectionFilter
+          ariaLabel="Filter experiences by category"
+          options={experienceCategories}
+          selected={selected}
+          onChange={setSelected}
+          layout="scroll"
+        />
+      </ScrollReveal>
 
       <div className={styles.grid}>
         {filteredExperiences.map((item, index) => (
-          <article
+          <ScrollReveal
+            as="article"
             key={`${selected}-${item.title}`}
             className={styles.card}
-            style={{ animationDelay: `${index * 70}ms` }}
+            delay={360 + index * 95}
           >
             <div className={styles.cardMeta}>
               <div className={styles.iconTile}>
@@ -98,7 +104,7 @@ export default function Experience() {
                 ))}
               </div>
             ) : null}
-          </article>
+          </ScrollReveal>
         ))}
       </div>
     </SectionLayout>

@@ -1,11 +1,13 @@
 "use client";
 
-import { type CSSProperties, useMemo, useState } from "react";
+import { type CSSProperties, useState } from "react";
+import SectionFilter from "@/components/SectionFilter";
 import SectionHeader from "@/components/SectionHeader";
 import SectionLayout from "@/components/SectionLayout";
 import {
   type SkillAccent,
   type SkillCategory,
+  type SkillItem,
   skillCategories,
   skills,
 } from "@/content/skills";
@@ -34,38 +36,44 @@ function getSkillChipStyle(
   };
 }
 
+function getSkillIconSrc(icon: string) {
+  return `https://cdn.simpleicons.org/${icon}`;
+}
+
+function SkillIcons({ icon, name }: Pick<SkillItem, "icon" | "name">) {
+  const icons = Array.isArray(icon) ? icon : [icon];
+
+  return icons.map((iconName) => (
+    // biome-ignore lint/performance/noImgElement: Simple Icons SVGs are tiny decorative CDN assets, so raw img is the simpler fit here.
+    <img
+      key={`${name}-${iconName}`}
+      src={getSkillIconSrc(iconName)}
+      alt=""
+      aria-hidden="true"
+      className={styles.skillIcon}
+      loading="lazy"
+      decoding="async"
+    />
+  ));
+}
+
 export default function Skills() {
   const [selected, setSelected] = useState<SkillCategory>("all");
-
-  const filteredSkills = useMemo(() => {
-    if (selected === "all") return skills;
-
-    return skills.filter((skill) => skill.categories.includes(selected));
-  }, [selected]);
+  const filteredSkills =
+    selected === "all"
+      ? skills
+      : skills.filter((skill) => skill.categories.includes(selected));
 
   return (
     <SectionLayout id="skills" className={styles.section}>
       <SectionHeader title="SKILLS" />
 
-      <div className={styles.filterGroup}>
-        {skillCategories.map((cat) => {
-          const isActive = selected === cat.value;
-
-          return (
-            <button
-              type="button"
-              key={cat.value}
-              onClick={() => setSelected(cat.value)}
-              aria-pressed={isActive}
-              data-active={isActive}
-              className={styles.filterButton}
-            >
-              <span className={styles.filterButtonDot} aria-hidden="true" />
-              <span className={styles.filterButtonLabel}>{cat.label}</span>
-            </button>
-          );
-        })}
-      </div>
+      <SectionFilter
+        ariaLabel="Filter skills by category"
+        options={skillCategories}
+        selected={selected}
+        onChange={setSelected}
+      />
 
       <div className={styles.skillsGrid}>
         {filteredSkills.map((skill, index) => (
@@ -79,22 +87,7 @@ export default function Skills() {
             )}
           >
             <div className={styles.skillChipIcons}>
-              {Array.isArray(skill.icon) ? (
-                skill.icon.map((icon) => (
-                  <img
-                    key={icon}
-                    src={`https://cdn.simpleicons.org/${icon}`}
-                    alt={icon}
-                    className={styles.skillIcon}
-                  />
-                ))
-              ) : (
-                <img
-                  src={`https://cdn.simpleicons.org/${skill.icon}`}
-                  alt={skill.name}
-                  className={styles.skillIcon}
-                />
-              )}
+              <SkillIcons icon={skill.icon} name={skill.name} />
             </div>
             {skill.name}
           </div>

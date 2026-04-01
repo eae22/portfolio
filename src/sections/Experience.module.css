@@ -1,0 +1,320 @@
+.section {
+  --experience-accent: #97a0ff;
+  --experience-accent-soft: #8ea6d8;
+  --section-filter-accent: color-mix(
+    in srgb,
+    var(--experience-accent) 58%,
+    var(--experience-accent-soft) 42%
+  );
+  --section-filter-group-shadow: 0 22px 48px rgb(2 8 23 / 0.18);
+  --section-filter-shadow: 0 10px 24px rgb(2 8 23 / 0.14);
+  --section-filter-active-shadow: 0 16px 32px rgb(2 8 23 / 0.2);
+  --section-filter-active-before-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08), 0 12px 24px
+    color-mix(in srgb, var(--section-filter-accent) 14%, transparent);
+  --section-filter-button-padding-x: 1.2rem;
+  --section-filter-dot-base-glow: rgb(20 217 245 / 0);
+  --experience-card-shadow: 0 16px 34px rgb(15 23 42 / 0.16);
+  --experience-card-hover-shadow: 0 34px 58px rgb(15 23 42 / 0.28);
+  --experience-enter-distance: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 20.75rem;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.5rem;
+  border: 2px solid
+    color-mix(
+      in srgb,
+      var(--color-border-subtle) 84%,
+      var(--experience-accent) 16%
+    );
+  border-radius: 2rem;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.03), rgb(255 255 255 / 0.01)),
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--color-surface-card) 92%, white 8%),
+      color-mix(in srgb, var(--color-surface-secondary) 94%, black 6%)
+    );
+  box-shadow: var(--experience-card-shadow);
+  animation: experience-card-enter var(--duration-emphasis) var(--ease-out) both;
+  overflow: hidden;
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.05), rgb(255 255 255 / 0.015)),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--experience-accent) 9%, transparent),
+      color-mix(in srgb, white 4%, transparent) 42%,
+      transparent 78%
+    );
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.016);
+  border-color: color-mix(
+    in srgb,
+    var(--color-border-subtle) 54%,
+    var(--experience-accent) 46%
+  );
+  box-shadow: var(--experience-card-hover-shadow);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.cardMetaCopy {
+  display: grid;
+  gap: 0.6rem;
+  padding-top: 0.2rem;
+}
+
+.iconTile {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  place-items: center;
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.04), rgb(255 255 255 / 0.02)),
+    linear-gradient(
+      180deg,
+      color-mix(
+        in srgb,
+        var(--experience-accent) 20%,
+        var(--color-surface-secondary) 80%
+      ),
+      color-mix(
+        in srgb,
+        var(--experience-accent-soft) 14%,
+        var(--color-surface-card) 86%
+      )
+    );
+  transition:
+    transform var(--duration-normal) var(--ease-bounce),
+    box-shadow var(--duration-normal) var(--ease-out),
+    background var(--duration-normal) var(--ease-out);
+}
+
+.categoryBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: color-mix(in srgb, var(--experience-accent) 68%, white 32%);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  transition:
+    color var(--duration-normal) var(--ease-out),
+    text-shadow var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out),
+    letter-spacing var(--duration-normal) var(--ease-out);
+}
+
+.categoryBadge::before {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--experience-accent) 74%, white 26%);
+  box-shadow: 0 0 12px
+    color-mix(in srgb, var(--experience-accent) 22%, transparent);
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+.iconGlyph {
+  width: 1.55rem;
+  height: 1.55rem;
+  color: color-mix(
+    in srgb,
+    var(--experience-accent-soft) 56%,
+    var(--experience-accent) 44%
+  );
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out);
+}
+
+.cardBody {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.cardTitle {
+  font-size: clamp(1.425rem, 1.85vw, 1.875rem);
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+.cardPeriod {
+  color: color-mix(in srgb, var(--color-text-tertiary) 88%, white 12%);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.cardDescription {
+  color: color-mix(in srgb, var(--color-text-secondary) 90%, white 10%);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.tagGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: auto;
+}
+
+.tag {
+  padding: 0.32rem 0.62rem;
+  color: color-mix(in srgb, var(--color-text-secondary) 64%, white 36%);
+  font-size: 0.74rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid
+    color-mix(in srgb, var(--color-border-subtle) 90%, white 10%);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-surface-pill) 66%, black 34%);
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.tag:hover {
+  transform: translateY(-1px) scale(1.04);
+  color: color-mix(in srgb, var(--color-text-secondary) 52%, white 48%);
+  border-color: color-mix(
+    in srgb,
+    var(--color-border-subtle) 58%,
+    var(--experience-accent) 42%
+  );
+  background: color-mix(in srgb, var(--color-surface-pill) 56%, black 44%);
+  box-shadow: 0 10px 18px rgb(15 23 42 / 0.12);
+}
+
+.card:hover .categoryBadge {
+  color: color-mix(in srgb, var(--experience-accent) 82%, white 18%);
+  letter-spacing: 0.105em;
+  text-shadow: 0 0 14px
+    color-mix(in srgb, var(--experience-accent) 14%, transparent);
+  transform: translateX(1px);
+}
+
+.card:hover .categoryBadge::before {
+  transform: scale(1.16);
+  background: color-mix(in srgb, var(--experience-accent) 82%, white 18%);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--experience-accent) 12%, transparent),
+    0 0 18px color-mix(in srgb, var(--experience-accent) 28%, transparent);
+  animation: experience-category-badge-pulse 2.4s var(--ease-out) infinite;
+}
+
+.card:hover .iconTile {
+  transform: translateY(-2px) rotate(-4deg) scale(1.02);
+  box-shadow: 0 16px 28px rgb(15 23 42 / 0.18);
+}
+
+.card:hover .iconGlyph {
+  transform: rotate(5deg) scale(1.03);
+  color: color-mix(in srgb, var(--experience-accent-soft) 46%, white 54%);
+}
+
+@keyframes experience-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--experience-enter-distance));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes experience-category-badge-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 4px color-mix(in srgb, var(--experience-accent) 10%, transparent),
+      0 0 16px color-mix(in srgb, var(--experience-accent) 24%, transparent);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--experience-accent) 14%, transparent),
+      0 0 24px color-mix(in srgb, var(--experience-accent) 34%, transparent);
+  }
+}
+
+@media (width <= 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    min-height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card::before,
+  .iconTile,
+  .iconGlyph,
+  .categoryBadge {
+    animation: none;
+    transition-duration: 0ms;
+  }
+}

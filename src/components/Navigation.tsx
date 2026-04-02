@@ -12,6 +12,7 @@ const navItems = [
 
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [highlightStyle, setHighlightStyle] = useState<{
     left: number;
     width: number;
@@ -67,6 +68,19 @@ export default function Navigation() {
     return () => {
       window.removeEventListener("scroll", updateActiveSection);
       window.removeEventListener("resize", updateActiveSection);
+    };
+  }, []);
+
+  useEffect(() => {
+    const updateScrolledState = () => {
+      setIsScrolled(window.scrollY > 18);
+    };
+
+    updateScrolledState();
+    window.addEventListener("scroll", updateScrolledState, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", updateScrolledState);
     };
   }, []);
 
@@ -136,23 +150,43 @@ export default function Navigation() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border-subtle bg-surface-nav backdrop-blur">
-      <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+    <header
+      className={`sticky top-0 z-50 border-b transition-all duration-500 ${
+        isScrolled
+          ? "border-white/10 bg-[linear-gradient(180deg,rgba(2,8,23,0.9),rgba(2,8,23,0.72))] shadow-[0_18px_40px_rgba(2,8,23,0.22)] backdrop-blur-xl"
+          : "border-border-subtle bg-[radial-gradient(circle_at_top_left,rgba(125,211,252,0.08),transparent_26%),radial-gradient(circle_at_top_right,rgba(192,132,252,0.08),transparent_28%),rgba(2,8,23,0.78)] backdrop-blur"
+      }`}
+    >
+      <nav
+        className={`mx-auto flex max-w-5xl items-center justify-between px-6 transition-[padding] duration-500 ${
+          isScrolled ? "py-3" : "py-4"
+        }`}
+      >
         <Link
-          className="my-1 text-lg font-bold text-text-primary"
+          className="group my-1 inline-flex items-center gap-3 text-lg font-bold text-text-primary transition-transform duration-300 hover:-translate-y-0.5"
           href="/"
           onClick={handleLogoClick}
         >
-          Portfolio
+          <span className="relative flex h-3 w-3">
+            <span className="absolute inset-0 rounded-full bg-sky-300/24 blur-[6px] transition-opacity duration-300 group-hover:opacity-100" />
+            <span className="absolute inset-[1px] rounded-full bg-linear-to-br from-sky-100 via-sky-200 to-cyan-300 shadow-[0_0_12px_rgba(125,211,252,0.28)] transition-transform duration-300 group-hover:scale-110" />
+          </span>
+          <span className="bg-linear-to-r from-white via-slate-100 to-sky-100 bg-clip-text text-transparent transition-[letter-spacing] duration-300 group-hover:tracking-[0.01em]">
+            Portfolio
+          </span>
         </Link>
 
         <ul
           ref={navListRef}
-          className="relative flex items-center gap-3 rounded-full p-1 text-sm font-medium text-text-secondary"
+          className={`relative flex items-center gap-2 rounded-full border px-1 py-1 text-sm font-medium text-text-secondary transition-all duration-500 ${
+            isScrolled
+              ? "border-white/8 bg-white/[0.025] shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_8px_20px_rgba(2,8,23,0.12)]"
+              : "border-white/7 bg-white/[0.018] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
+          }`}
         >
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-1 left-0 rounded-full border border-border-subtle bg-surface-pill/95 shadow-[0_12px_28px_rgba(15,23,42,0.28)] transition-[transform,width,opacity,scale] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            className="pointer-events-none absolute inset-y-1 left-0 rounded-full border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_8px_18px_rgba(15,23,42,0.16)] backdrop-blur-md transition-[transform,width,opacity,scale] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={{
               width: `${highlightStyle.width}px`,
               opacity: highlightStyle.opacity,
@@ -171,10 +205,10 @@ export default function Navigation() {
                     itemRefs.current[item.id] = element;
                   }}
                   onClick={(event) => handleNavClick(event, item.id, item.href)}
-                  className={`block rounded-full px-5 py-2.5 transition-[color,transform] duration-300 ${
+                  className={`block rounded-full px-4.5 py-2 transition-[color,transform,letter-spacing,opacity] duration-300 ${
                     isActive
-                      ? "text-text-primary"
-                      : "text-text-secondary hover:text-text-primary"
+                      ? "font-semibold tracking-[0.01em] text-white"
+                      : "text-text-secondary/88 hover:-translate-y-0.5 hover:text-white"
                   }`}
                 >
                   {item.label}

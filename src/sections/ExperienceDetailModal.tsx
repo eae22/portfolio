@@ -2,7 +2,7 @@
 
 import { ArrowLeft, ArrowUpRight, GitBranch } from "lucide-react";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import SkillPill from "@/components/SkillPill";
 import {
   type ExperienceItem,
@@ -35,6 +35,19 @@ export default function ExperienceDetailModal({
   onClose,
 }: ExperienceDetailModalProps) {
   const techStack = getSkillsByKeys(item.techStack);
+  const [isClosing, setIsClosing] = useState(false);
+  const closeTimeoutRef = useRef<number | null>(null);
+  const isClosingRef = useRef(false);
+
+  const handleRequestClose = useCallback(() => {
+    if (isClosingRef.current) return;
+
+    isClosingRef.current = true;
+    setIsClosing(true);
+    closeTimeoutRef.current = window.setTimeout(() => {
+      onClose();
+    }, 320);
+  }, [onClose]);
 
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
@@ -43,7 +56,7 @@ export default function ExperienceDetailModal({
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        onClose();
+        handleRequestClose();
       }
     }
 
@@ -52,19 +65,23 @@ export default function ExperienceDetailModal({
     return () => {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", handleKeyDown);
+      if (closeTimeoutRef.current) {
+        window.clearTimeout(closeTimeoutRef.current);
+      }
     };
-  }, [onClose]);
+  }, [handleRequestClose]);
 
   return (
-    <div className={styles.backdrop}>
+    <div className={styles.backdrop} data-closing={isClosing}>
       <button
         type="button"
         className={styles.dismissLayer}
-        onClick={onClose}
+        onClick={handleRequestClose}
         aria-label="경험 상세 모달 닫기"
       />
       <div
         className={styles.dialog}
+        data-closing={isClosing}
         role="dialog"
         aria-modal="true"
         aria-labelledby={`experience-detail-title-${item.slug}`}
@@ -73,7 +90,7 @@ export default function ExperienceDetailModal({
           <div className={styles.headerStart}>
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleRequestClose}
               className={styles.backButton}
               aria-label="경험 상세 모달 닫기"
             >

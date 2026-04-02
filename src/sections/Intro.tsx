@@ -1,4 +1,5 @@
 import PillLink from "@/components/PillLink";
+import ScrollReveal from "@/components/ScrollReveal";
 import SectionLayout from "@/components/SectionLayout";
 
 export default function Intro() {
@@ -8,24 +9,34 @@ export default function Intro() {
       fullHeight
       className="flex flex-col items-center justify-center text-center"
     >
-      <div className="mb-6 rounded-full bg-surface-badge px-5 py-2 text-sm text-text-secondary">
-        👋 Welcome to my portfolio
-      </div>
+      <ScrollReveal delay={40}>
+        <div className="mb-6 rounded-full bg-surface-badge px-5 py-2 text-sm text-text-secondary">
+          👋 Welcome to my portfolio
+        </div>
+      </ScrollReveal>
 
-      <h1 className="mb-8 text-5xl font-bold leading-tight md:text-7xl">
-        한 줄 소개가 들어갈 자리
-      </h1>
+      <ScrollReveal delay={140}>
+        <h1 className="mb-8 text-5xl font-bold leading-tight md:text-7xl">
+          한 줄 소개가 들어갈 자리
+        </h1>
+      </ScrollReveal>
 
-      <p className="mb-1 text-lg text-text-secondary md:text-xl">
-        여기에 간단한 자기소개 문장이 들어갑니다.
-      </p>
-      <p className="mb-7 text-lg text-text-secondary md:text-xl">
-        두 줄 정도의 간단한 소개 텍스트를 배치할 예정입니다.
-      </p>
+      <ScrollReveal delay={240}>
+        <p className="mb-1 text-lg text-text-secondary md:text-xl">
+          여기에 간단한 자기소개 문장이 들어갑니다.
+        </p>
+      </ScrollReveal>
+      <ScrollReveal delay={310}>
+        <p className="mb-7 text-lg text-text-secondary md:text-xl">
+          두 줄 정도의 간단한 소개 텍스트를 배치할 예정입니다.
+        </p>
+      </ScrollReveal>
 
-      <PillLink href="#contact" className="px-6 py-2.5">
-        Contact me →
-      </PillLink>
+      <ScrollReveal delay={380}>
+        <PillLink href="#contact" className="px-6 py-2.5">
+          Contact me →
+        </PillLink>
+      </ScrollReveal>
     </SectionLayout>
   );
 }

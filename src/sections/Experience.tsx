@@ -11,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import { useState } from "react";
+import ScrollReveal from "@/components/ScrollReveal";
 import SectionFilter from "@/components/SectionFilter";
 import SectionHeader from "@/components/SectionHeader";
 import SectionLayout from "@/components/SectionLayout";
@@ -57,66 +58,72 @@ export default function Experience() {
 
   return (
     <SectionLayout id="experience" className={styles.section}>
-      <SectionHeader title="EXPERIENCE" />
+      <ScrollReveal delay={40}>
+        <SectionHeader title="EXPERIENCE" />
+      </ScrollReveal>
 
-      <SectionFilter
-        ariaLabel="Filter experiences by category"
-        options={experienceCategories}
-        selected={selected}
-        onChange={setSelected}
-        layout="wrap"
-        tone="experience"
-      />
+      <ScrollReveal delay={140}>
+        <SectionFilter
+          ariaLabel="Filter experiences by category"
+          options={experienceCategories}
+          selected={selected}
+          onChange={setSelected}
+          layout="wrap"
+          tone="experience"
+        />
+      </ScrollReveal>
 
-      <div className={styles.grid}>
-        {filteredExperiences.map((item, index) => (
-          <button
-            type="button"
-            key={`${selected}-${item.title}`}
-            className={styles.card}
-            style={{ animationDelay: `${index * 70}ms` }}
-            onClick={() => setActiveExperience(item)}
-            aria-haspopup="dialog"
-            aria-label={`${item.title} 상세 보기`}
-          >
-            <div className={styles.cardContent}>
-              <div className={styles.cardMeta}>
-                <div className={styles.iconTile}>
-                  <ExperienceIconGlyph
-                    icon={item.icon}
-                    className={styles.iconGlyph}
-                  />
-                </div>
-                <div className={styles.cardMetaCopy}>
-                  <span className={styles.categoryBadge}>
-                    {experienceCategoryLabels[item.category]}
-                  </span>
-                  <p className={styles.cardPeriod}>{item.period}</p>
-                </div>
-              </div>
-
-              <div className={styles.cardBody}>
-                <h3 className={styles.cardTitle}>{item.title}</h3>
-                <p className={styles.cardDescription}>{item.description}</p>
-              </div>
-
-              {item.tags?.length ? (
-                <div className={styles.tagGroup}>
-                  {item.tags.map((tag) => (
-                    <span key={`${item.title}-${tag}`} className={styles.tag}>
-                      {tag}
+      <ScrollReveal delay={240}>
+        <div className={styles.grid}>
+          {filteredExperiences.map((item, index) => (
+            <button
+              type="button"
+              key={`${selected}-${item.title}`}
+              className={styles.card}
+              style={{ animationDelay: `${index * 70}ms` }}
+              onClick={() => setActiveExperience(item)}
+              aria-haspopup="dialog"
+              aria-label={`${item.title} 상세 보기`}
+            >
+              <div className={styles.cardContent}>
+                <div className={styles.cardMeta}>
+                  <div className={styles.iconTile}>
+                    <ExperienceIconGlyph
+                      icon={item.icon}
+                      className={styles.iconGlyph}
+                    />
+                  </div>
+                  <div className={styles.cardMetaCopy}>
+                    <span className={styles.categoryBadge}>
+                      {experienceCategoryLabels[item.category]}
                     </span>
-                  ))}
+                    <p className={styles.cardPeriod}>{item.period}</p>
+                  </div>
                 </div>
-              ) : null}
 
-              <div className={styles.cardLink} aria-hidden="true">
-                <ArrowUpRight className={styles.cardLinkArrow} />
+                <div className={styles.cardBody}>
+                  <h3 className={styles.cardTitle}>{item.title}</h3>
+                  <p className={styles.cardDescription}>{item.description}</p>
+                </div>
+
+                {item.tags?.length ? (
+                  <div className={styles.tagGroup}>
+                    {item.tags.map((tag) => (
+                      <span key={`${item.title}-${tag}`} className={styles.tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
+
+                <div className={styles.cardLink} aria-hidden="true">
+                  <ArrowUpRight className={styles.cardLinkArrow} />
+                </div>
               </div>
-            </div>
-          </button>
-        ))}
-      </div>
+            </button>
+          ))}
+        </div>
+      </ScrollReveal>
 
       {activeExperience ? (
         <ExperienceDetailModal

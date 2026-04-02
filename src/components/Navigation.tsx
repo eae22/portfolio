@@ -73,9 +73,15 @@ export default function Navigation() {
   useEffect(() => {
     const updateHighlight = () => {
       const navList = navListRef.current;
+
+      if (!navList || !activeSection) {
+        setHighlightStyle((prev) => ({ ...prev, opacity: 0 }));
+        return;
+      }
+
       const activeItem = itemRefs.current[activeSection];
 
-      if (!navList || !activeItem || !activeSection) {
+      if (!activeItem) {
         setHighlightStyle((prev) => ({ ...prev, opacity: 0 }));
         return;
       }

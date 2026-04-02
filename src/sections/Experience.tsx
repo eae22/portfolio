@@ -59,7 +59,7 @@ export default function Experience() {
   return (
     <SectionLayout id="experience" className={styles.section}>
       <ScrollReveal delay={40}>
-        <SectionHeader title="EXPERIENCE" />
+        <SectionHeader title="EXPERIENCE" accent="experience" />
       </ScrollReveal>
 
       <ScrollReveal delay={140}>

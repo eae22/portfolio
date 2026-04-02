@@ -3,6 +3,7 @@
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
+import SectionHeader from "@/components/SectionHeader";
 
 const EMAIL = "eun0110@dgu.ac.kr";
 const GMAIL_COMPOSE_URL =
@@ -29,12 +30,7 @@ export default function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-5xl scroll-mt-16 px-6 py-24">
       <ScrollReveal delay={40}>
-        <div className="mb-20 flex items-center gap-4">
-          <div className="h-8 w-1 rounded-full bg-text-primary" />
-          <h2 className="text-base font-bold tracking-(--letter-spacing-section) text-text-primary">
-            CONTACT
-          </h2>
-        </div>
+        <SectionHeader title="CONTACT" accent="contact" />
       </ScrollReveal>
       <ScrollReveal delay={150}>
         <div className="flex flex-col items-center justify-center text-center">

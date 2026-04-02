@@ -7,7 +7,7 @@ export default function Profile() {
   return (
     <SectionLayout id="profile">
       <ScrollReveal delay={40}>
-        <SectionHeader title="PROFILE" />
+        <SectionHeader title="PROFILE" accent="profile" />
       </ScrollReveal>
 
       <ScrollReveal delay={150}>

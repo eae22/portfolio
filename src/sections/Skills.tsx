@@ -19,7 +19,7 @@ export default function Skills() {
   return (
     <SectionLayout id="skills" className={styles.section}>
       <ScrollReveal delay={40}>
-        <SectionHeader title="SKILLS" />
+        <SectionHeader title="SKILLS" accent="skills" />
       </ScrollReveal>
 
       <ScrollReveal delay={140}>

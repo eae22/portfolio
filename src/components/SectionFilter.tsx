@@ -11,6 +11,7 @@ type SectionFilterProps<Value extends string> = {
   selected: Value;
   onChange: (value: Value) => void;
   layout?: "wrap" | "scroll";
+  tone?: "default" | "experience";
 };
 
 export default function SectionFilter<Value extends string>({
@@ -19,9 +20,10 @@ export default function SectionFilter<Value extends string>({
   selected,
   onChange,
   layout = "wrap",
+  tone = "default",
 }: SectionFilterProps<Value>) {
   return (
-    <fieldset className={styles.group} data-layout={layout}>
+    <fieldset className={styles.group} data-layout={layout} data-tone={tone}>
       <legend className={styles.legend}>{ariaLabel}</legend>
       {options.map((option) => {
         const isActive = selected === option.value;

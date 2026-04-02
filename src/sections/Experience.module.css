@@ -1,19 +1,31 @@
 .section {
   --experience-accent: #97a0ff;
   --experience-accent-soft: #8ea6d8;
+  --experience-filter-accent: #a855f7;
+  --experience-filter-accent-soft: #c084fc;
   --section-filter-accent: color-mix(
     in srgb,
-    var(--experience-accent) 58%,
-    var(--experience-accent-soft) 42%
+    var(--experience-filter-accent) 76%,
+    var(--experience-filter-accent-soft) 24%
   );
-  --section-filter-group-shadow: 0 22px 48px rgb(2 8 23 / 0.18);
-  --section-filter-shadow: 0 10px 24px rgb(2 8 23 / 0.14);
-  --section-filter-active-shadow: 0 16px 32px rgb(2 8 23 / 0.2);
+  --section-filter-group-shadow:
+    0 22px 48px rgb(2 8 23 / 0.18), 0 0 0 1px
+    color-mix(in srgb, var(--section-filter-accent) 10%, transparent);
+  --section-filter-shadow:
+    0 10px 24px rgb(2 8 23 / 0.14), 0 0 20px
+    color-mix(in srgb, var(--section-filter-accent) 10%, transparent);
+  --section-filter-active-shadow:
+    0 16px 32px rgb(2 8 23 / 0.22), 0 0 24px
+    color-mix(in srgb, var(--section-filter-accent) 24%, transparent);
   --section-filter-active-before-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.08), 0 12px 24px
-    color-mix(in srgb, var(--section-filter-accent) 14%, transparent);
+    color-mix(in srgb, var(--section-filter-accent) 24%, transparent);
   --section-filter-button-padding-x: 1.2rem;
-  --section-filter-dot-base-glow: rgb(20 217 245 / 0);
+  --section-filter-dot-base-glow: color-mix(
+    in srgb,
+    var(--section-filter-accent) 0%,
+    transparent
+  );
   --experience-card-shadow: 0 16px 34px rgb(15 23 42 / 0.16);
   --experience-card-hover-shadow: 0 34px 58px rgb(15 23 42 / 0.28);
   --experience-enter-distance: 16px;
@@ -29,10 +41,12 @@
   position: relative;
   isolation: isolate;
   display: flex;
+  width: 100%;
   min-height: 20.75rem;
   flex-direction: column;
-  gap: 1.2rem;
-  padding: 1.5rem;
+  padding: 0;
+  font: inherit;
+  text-align: left;
   border: 2px solid
     color-mix(
       in srgb,
@@ -40,7 +54,8 @@
       var(--experience-accent) 16%
     );
   border-radius: 2rem;
-  cursor: default;
+  cursor: pointer;
+  appearance: none;
   background:
     linear-gradient(180deg, rgb(255 255 255 / 0.03), rgb(255 255 255 / 0.01)),
     linear-gradient(
@@ -56,6 +71,16 @@
     transform var(--duration-normal) var(--ease-out),
     border-color var(--duration-normal) var(--ease-out),
     box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.cardContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 20.75rem;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.5rem;
 }
 
 .card::before {
@@ -78,6 +103,14 @@
 .card > * {
   position: relative;
   z-index: 1;
+}
+
+.card:focus-visible {
+  outline: none;
+  border-color: color-mix(in srgb, var(--experience-accent) 62%, white 38%);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--experience-accent) 18%, transparent),
+    var(--experience-card-hover-shadow);
 }
 
 .card:hover {
@@ -216,7 +249,7 @@
   line-height: 1.2;
   font-weight: 600;
   letter-spacing: 0.01em;
-  border: 1px solid
+  border: 1.5px solid
     color-mix(in srgb, var(--color-border-subtle) 90%, white 10%);
   border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--color-surface-pill) 66%, black 34%);

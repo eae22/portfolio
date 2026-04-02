@@ -1,0 +1,19 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" rx="48" fill="#0A1021"/>
+  <rect x="56" y="56" width="1488" height="788" rx="36" fill="url(#paint0_linear)"/>
+  <circle cx="1280" cy="220" r="160" fill="#F59E0B" fill-opacity="0.18"/>
+  <rect x="112" y="112" width="332" height="44" rx="22" fill="#241B0C"/>
+  <rect x="112" y="204" width="720" height="128" rx="28" fill="#111827"/>
+  <rect x="112" y="388" width="452" height="286" rx="32" fill="#1E293B"/>
+  <rect x="620" y="388" width="398" height="132" rx="32" fill="#78350F" fill-opacity="0.42"/>
+  <rect x="620" y="548" width="518" height="132" rx="32" fill="#111827"/>
+  <text x="144" y="141" fill="#FCD34D" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" letter-spacing="3">HACKATHON AWARD</text>
+  <text x="144" y="276" fill="#F8FAFC" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800">48-hour Product Sprint</text>
+  <text x="144" y="336" fill="#CBD5E1" font-family="Arial, Helvetica, sans-serif" font-size="32">Focused MVP, clear storytelling, fast teamwork</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="96" y1="88" x2="1452" y2="812" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17110A"/>
+      <stop offset="1" stop-color="#090B12"/>
+    </linearGradient>
+  </defs>
+</svg>

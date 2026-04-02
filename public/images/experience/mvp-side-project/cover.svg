@@ -1,0 +1,19 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" rx="48" fill="#0A0F22"/>
+  <rect x="56" y="56" width="1488" height="788" rx="36" fill="url(#paint0_linear)"/>
+  <circle cx="1312" cy="220" r="148" fill="#E879F9" fill-opacity="0.16"/>
+  <rect x="112" y="112" width="360" height="44" rx="22" fill="#31124B"/>
+  <rect x="112" y="204" width="760" height="128" rx="28" fill="#111827"/>
+  <rect x="112" y="392" width="540" height="292" rx="32" fill="#0F172A"/>
+  <rect x="700" y="392" width="572" height="136" rx="32" fill="#6D28D9" fill-opacity="0.2"/>
+  <rect x="700" y="556" width="420" height="128" rx="32" fill="#111827"/>
+  <text x="144" y="141" fill="#F5D0FE" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" letter-spacing="3">MVP SIDE PROJECT</text>
+  <text x="144" y="276" fill="#F8FAFC" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800">Fast Validation Loop</text>
+  <text x="144" y="336" fill="#F5D0FE" font-family="Arial, Helvetica, sans-serif" font-size="32">Prioritizing what proves the idea first</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="112" y1="96" x2="1420" y2="808" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1B1230"/>
+      <stop offset="1" stop-color="#0A0D16"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -5,7 +5,7 @@ import SectionLayout from "@/components/SectionLayout";
 
 export default function Profile() {
   return (
-    <SectionLayout id="profile">
+    <SectionLayout id="profile" className="pt-12 md:pt-12">
       <ScrollReveal delay={40}>
         <SectionHeader title="PROFILE" accent="profile" />
       </ScrollReveal>

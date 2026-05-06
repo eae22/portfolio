@@ -1,6 +1,23 @@
 :root {
   color-scheme: dark;
   --copy-pop-distance: -4px;
+
+  /* skill brand */
+  --color-skill-neutral: #94a3b8;
+  --color-skill-javascript: #f7df1e;
+  --color-skill-typescript: #3178c6;
+  --color-skill-python: #3776ab;
+  --color-skill-c: #a8b9cc;
+  --color-skill-react: #61dafb;
+  --color-skill-nextjs: #111111;
+  --color-skill-html: #e34f26;
+  --color-skill-css: #1572b6;
+  --color-skill-tailwind: #06b6d4;
+  --color-skill-nodejs: #5fa04e;
+  --color-skill-mysql: #4479a1;
+  --color-skill-git: #f05032;
+  --color-skill-figma: #a259ff;
+  --color-skill-docker: #2496ed;
 }
 
 @theme inline {
@@ -23,6 +40,7 @@
   --color-border-subtle: rgb(255 255 255 / 0.1);
   --color-border-strong: rgb(255 255 255 / 0.16);
   --color-border-accent: rgb(96 165 250 / 0.8);
+  --color-border-inverse-subtle: rgb(15 23 42 / 0.08);
 
   /* radius */
   --radius-sm: 12px;

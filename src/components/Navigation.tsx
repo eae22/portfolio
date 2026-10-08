@@ -1,5 +1,6 @@
 "use client";
 
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
@@ -7,12 +8,16 @@ const navItems = [
   { label: "Profile", href: "#profile", id: "profile" },
   { label: "Skills", href: "#skills", id: "skills" },
   { label: "Experience", href: "#experience", id: "experience" },
+  { label: "Awards", href: "#awards", id: "awards" },
   { label: "Contact", href: "#contact", id: "contact" },
 ];
 
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
   const [highlightStyle, setHighlightStyle] = useState<{
     left: number;
     width: number;
@@ -118,6 +123,35 @@ export default function Navigation() {
     };
   }, [activeSection]);
 
+  // 모바일 메뉴: Esc나 헤더 바깥을 누르면 닫는다
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+
+      // 메뉴 안에 있던 키보드 포커스가 사라지지 않게 메뉴 버튼으로 돌려준다
+      if (headerRef.current?.contains(document.activeElement)) {
+        menuButtonRef.current?.focus();
+      }
+      setIsMenuOpen(false);
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("pointerdown", handlePointerDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [isMenuOpen]);
+
   const handleNavClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
     id: string,
@@ -141,6 +175,7 @@ export default function Navigation() {
 
   const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
+    setIsMenuOpen(false);
     setActiveSection(null);
     window.history.replaceState(null, "", "/");
     window.scrollTo({
@@ -151,6 +186,7 @@ export default function Navigation() {
 
   return (
     <header
+      ref={headerRef}
       className={`sticky top-0 z-50 border-b transition-all duration-500 ${
         isScrolled
           ? "border-white/10 bg-[linear-gradient(180deg,rgba(2,8,23,0.9),rgba(2,8,23,0.72))] shadow-[0_18px_40px_rgba(2,8,23,0.22)] backdrop-blur-xl"
@@ -178,7 +214,7 @@ export default function Navigation() {
 
         <ul
           ref={navListRef}
-          className={`relative flex items-center gap-2 rounded-full border px-1 py-1 text-sm font-medium text-text-secondary transition-all duration-500 ${
+          className={`relative hidden items-center gap-2 rounded-full border px-1 py-1 text-sm font-medium text-text-secondary transition-all duration-500 md:flex ${
             isScrolled
               ? "border-white/8 bg-white/[0.025] shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_8px_20px_rgba(2,8,23,0.12)]"
               : "border-white/7 bg-white/[0.018] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
@@ -217,6 +253,60 @@ export default function Navigation() {
             );
           })}
         </ul>
+
+        <button
+          ref={menuButtonRef}
+          type="button"
+          className="my-1 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/3 text-text-secondary transition-colors duration-300 hover:bg-white/6 hover:text-white md:hidden"
+          aria-label={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setIsMenuOpen((open) => !open)}
+        >
+          {isMenuOpen ? (
+            <X className="h-5 w-5" aria-hidden="true" />
+          ) : (
+            <Menu className="h-5 w-5" aria-hidden="true" />
+          )}
+        </button>
+
+        <div
+          id="mobile-navigation"
+          hidden={!isMenuOpen}
+          className="absolute inset-x-0 top-full border-b border-white/10 bg-bg-canvas shadow-[0_18px_40px_rgba(2,8,23,0.45)] md:hidden"
+        >
+          <ul className="mx-auto flex max-w-5xl flex-col gap-1 px-6 py-3">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id;
+
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={(event) => {
+                      handleNavClick(event, item.id, item.href);
+                      setIsMenuOpen(false);
+                    }}
+                    aria-current={isActive ? "true" : undefined}
+                    className={`flex items-center justify-between rounded-2xl px-4 py-3 text-[0.95rem] font-medium transition-colors duration-200 ${
+                      isActive
+                        ? "bg-white/7 text-white"
+                        : "text-text-secondary hover:bg-white/4 hover:text-white"
+                    }`}
+                  >
+                    {item.label}
+                    {isActive ? (
+                      <span
+                        aria-hidden="true"
+                        className="h-1.5 w-1.5 rounded-full bg-sky-300"
+                      />
+                    ) : null}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </nav>
     </header>
   );

@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Codex용 로컬 PR 템플릿
 .codex/
+
+# 로컬 작업 메모 (포트폴리오 수정 전달 문서)
+docs/

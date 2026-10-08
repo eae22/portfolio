@@ -58,7 +58,8 @@
     border-color var(--duration-normal) var(--ease-out),
     box-shadow var(--duration-normal) var(--ease-out),
     background var(--duration-normal) var(--ease-out);
-  animation: skill-pill-enter var(--duration-emphasis) var(--ease-out) both;
+  /* backwards: 끝난 뒤에는 transform을 놓아줘야 hover 이동이 먹는다 */
+  animation: skill-pill-enter var(--duration-emphasis) var(--ease-out) backwards;
   will-change: transform, opacity;
 }
 

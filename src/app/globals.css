@@ -18,4 +18,7 @@ body {
   background: var(--color-bg-canvas);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
+  /* 한글이 단어 중간에서 줄바꿈되지 않게 (긴 영문/URL은 넘칠 때만 끊는다) */
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }

@@ -1,3 +1,4 @@
+import Awards from "@/sections/Awards";
 import Contact from "@/sections/Contact";
 import Experience from "@/sections/Experience";
 import Intro from "@/sections/Intro";
@@ -11,6 +12,7 @@ export default function Home() {
       <Profile />
       <Skills />
       <Experience />
+      <Awards />
       <Contact />
     </main>
   );

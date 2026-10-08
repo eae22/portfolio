@@ -1,6 +1,6 @@
 type SectionHeaderProps = {
   title: string;
-  accent?: "profile" | "contact" | "skills" | "experience";
+  accent?: "profile" | "contact" | "skills" | "experience" | "awards";
 };
 
 const accentClassMap = {
@@ -12,6 +12,8 @@ const accentClassMap = {
     "bg-linear-to-b from-sky-100 via-sky-200 to-blue-300 shadow-[0_0_14px_rgba(96,165,250,0.18)]",
   experience:
     "bg-linear-to-b from-violet-100 via-fuchsia-200 to-purple-300 shadow-[0_0_14px_rgba(192,132,252,0.18)]",
+  awards:
+    "bg-linear-to-b from-amber-100 via-yellow-200 to-amber-300 shadow-[0_0_14px_rgba(252,211,77,0.18)]",
 } satisfies Record<NonNullable<SectionHeaderProps["accent"]>, string>;
 
 export default function SectionHeader({

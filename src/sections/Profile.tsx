@@ -2,6 +2,7 @@ import { ArrowUpRight, GitBranch, NotebookPen } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeader from "@/components/SectionHeader";
 import SectionLayout from "@/components/SectionLayout";
+import { profileLinks } from "@/content/profile";
 
 export default function Profile() {
   return (
@@ -35,7 +36,7 @@ export default function Profile() {
 
               <div className="mt-6 flex flex-wrap items-center gap-2.5">
                 <a
-                  href="https://github.com/eae22"
+                  href={profileLinks.github}
                   target="_blank"
                   rel="noreferrer"
                   className="group inline-flex items-center gap-2 rounded-[1rem] border-2 border-white/10 bg-[#0f1b3d] px-4.5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-sky-300/35 hover:bg-[#13234d] hover:shadow-[0_10px_20px_rgba(15,23,42,0.16)]"
@@ -51,7 +52,7 @@ export default function Profile() {
                 </a>
 
                 <a
-                  href="https://blog.naver.com/eae0110"
+                  href={profileLinks.blog}
                   target="_blank"
                   rel="noreferrer"
                   className="group inline-flex items-center gap-2 rounded-[1rem] border-2 border-white/10 bg-white/[0.04] px-4.5 py-2.5 text-sm font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-sky-200/25 hover:bg-white/[0.07] hover:shadow-[0_10px_20px_rgba(15,23,42,0.12)]"

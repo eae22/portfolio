@@ -40,11 +40,15 @@ export type SkillKey =
   | "c"
   | "react"
   | "nextjs"
+  | "vite"
   | "html-css"
   | "tailwind"
   | "nodejs"
+  | "express"
   | "mysql"
+  | "aws-rds"
   | "git"
+  | "github-actions"
   | "figma"
   | "docker";
 
@@ -118,6 +122,13 @@ export const skills: SkillItem[] = [
     accent: "nextjs",
   },
   {
+    key: "vite",
+    name: "Vite",
+    icon: "vite",
+    categories: ["frontend"],
+    accent: "vite",
+  },
+  {
     key: "html-css",
     name: "HTML/CSS",
     icon: ["html5", "css"],
@@ -142,11 +153,25 @@ export const skills: SkillItem[] = [
     accent: "nodejs",
   },
   {
+    key: "express",
+    name: "Express",
+    icon: "express",
+    categories: ["backend"],
+    accent: "express",
+  },
+  {
     key: "mysql",
     name: "MySQL",
     icon: "mysql",
     categories: ["backend"],
     accent: "mysql",
+  },
+  {
+    key: "aws-rds",
+    name: "AWS RDS",
+    icon: "/icons/database.svg",
+    categories: ["backend"],
+    accent: "awsrds",
   },
 
   // Tools
@@ -156,6 +181,13 @@ export const skills: SkillItem[] = [
     icon: "git",
     categories: ["tools"],
     accent: "git",
+  },
+  {
+    key: "github-actions",
+    name: "GitHub Actions",
+    icon: "githubactions",
+    categories: ["tools"],
+    accent: "githubactions",
   },
   {
     key: "figma",

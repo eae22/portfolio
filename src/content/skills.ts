@@ -1,9 +1,4 @@
-export type SkillCategory =
-  | "all"
-  | "languages"
-  | "frontend"
-  | "backend"
-  | "tools";
+export type SkillCategory = "languages" | "frontend" | "backend" | "tools";
 
 export type SkillAccent =
   | "javascript"
@@ -52,7 +47,7 @@ export type SkillKey =
   | "figma"
   | "docker";
 
-export interface SkillCategoryOption {
+export interface SkillGroup {
   label: string;
   value: SkillCategory;
 }
@@ -61,7 +56,7 @@ export interface SkillItem {
   key: SkillKey;
   name: string;
   icon: string | string[];
-  categories: Exclude<SkillCategory, "all">[];
+  categories: SkillCategory[];
   accent: SkillAccent;
   secondaryAccent?: SkillAccent;
 }
@@ -73,11 +68,11 @@ export interface TechBadge {
   secondaryAccent?: SkillAccent;
 }
 
-export const skillCategories: SkillCategoryOption[] = [
-  { label: "All", value: "all" },
-  { label: "Languages", value: "languages" },
+// Skills 섹션 카드 순서 (2×2: 위 Frontend · Backend, 아래 Languages · Tools)
+export const skillGroups: SkillGroup[] = [
   { label: "Frontend", value: "frontend" },
   { label: "Backend", value: "backend" },
+  { label: "Languages", value: "languages" },
   { label: "Tools", value: "tools" },
 ];
 

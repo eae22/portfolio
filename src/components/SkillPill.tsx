@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 import {
   getSkillIconSrc,
   type SkillAccent,
-  type SkillItem,
+  type TechBadge,
 } from "@/content/skills";
 import styles from "./SkillPill.module.css";
 
@@ -16,7 +16,7 @@ type SkillPillStyle = CSSProperties & {
 };
 
 type SkillPillProps = {
-  skill: Pick<SkillItem, "name" | "icon" | "accent" | "secondaryAccent">;
+  skill: TechBadge;
   animationDelayMs?: number;
   size?: "default" | "small";
 };
@@ -26,7 +26,7 @@ function getSkillAccentVar(accent?: SkillAccent) {
 }
 
 function getSkillPillStyle(
-  accent: SkillAccent,
+  accent: SkillAccent | undefined,
   secondaryAccent: SkillAccent | undefined,
   animationDelayMs?: number,
 ): SkillPillStyle {
@@ -45,7 +45,7 @@ export default function SkillPill({
   animationDelayMs,
   size = "default",
 }: SkillPillProps) {
-  const icons = Array.isArray(skill.icon) ? skill.icon : [skill.icon];
+  const icons = skill.icon === undefined ? [] : [skill.icon].flat();
 
   return (
     <div
@@ -58,20 +58,22 @@ export default function SkillPill({
         animationDelayMs,
       )}
     >
-      <div className={styles.icons}>
-        {icons.map((iconName) => (
-          // biome-ignore lint/performance/noImgElement: Simple Icons SVGs are tiny decorative CDN assets, so raw img is the simpler fit here.
-          <img
-            key={`${skill.name}-${iconName}`}
-            src={getSkillIconSrc(iconName)}
-            alt=""
-            aria-hidden="true"
-            className={styles.icon}
-            loading="lazy"
-            decoding="async"
-          />
-        ))}
-      </div>
+      {icons.length > 0 ? (
+        <div className={styles.icons}>
+          {icons.map((iconName) => (
+            // biome-ignore lint/performance/noImgElement: Simple Icons SVGs are tiny decorative CDN assets, so raw img is the simpler fit here.
+            <img
+              key={`${skill.name}-${iconName}`}
+              src={getSkillIconSrc(iconName)}
+              alt=""
+              aria-hidden="true"
+              className={styles.icon}
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
+        </div>
+      ) : null}
       <span className={styles.label}>{skill.name}</span>
     </div>
   );

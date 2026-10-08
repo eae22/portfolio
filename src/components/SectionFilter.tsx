@@ -1,8 +1,11 @@
+import type { CSSProperties } from "react";
 import styles from "./SectionFilter.module.css";
 
 export interface SectionFilterOption<Value extends string> {
   label: string;
   value: Value;
+  // 버튼마다 다른 강조색 (점, 활성 테두리). 없으면 그룹 색을 쓴다
+  accent?: string;
 }
 
 type SectionFilterProps<Value extends string> = {
@@ -36,6 +39,14 @@ export default function SectionFilter<Value extends string>({
             aria-pressed={isActive}
             data-active={isActive}
             className={styles.button}
+            style={
+              option.accent
+                ? ({
+                    "--section-filter-accent": option.accent,
+                    "--section-filter-dot-idle": option.accent,
+                  } as CSSProperties)
+                : undefined
+            }
           >
             <span className={styles.dot} aria-hidden="true" />
             <span className={styles.label}>{option.label}</span>

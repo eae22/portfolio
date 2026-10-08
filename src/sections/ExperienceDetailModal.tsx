@@ -1,14 +1,20 @@
 "use client";
 
-import { ArrowLeft, ArrowUpRight, GitBranch } from "lucide-react";
-import Image from "next/image";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  GitBranch,
+  Link2,
+  Trophy,
+} from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import SkillPill from "@/components/SkillPill";
+import { getAwardByProject } from "@/content/achievements";
 import {
   type ExperienceItem,
-  experienceCategoryLabels,
+  formatExperiencePeriod,
 } from "@/content/experience";
-import { getSkillsByKeys } from "@/content/skills";
+import { getTechBadge } from "@/content/skills";
 import styles from "./ExperienceDetailModal.module.css";
 
 type ExperienceDetailModalProps = {
@@ -17,9 +23,35 @@ type ExperienceDetailModalProps = {
 };
 
 type DetailSectionTitleProps = {
-  number: string;
+  number: number;
   title: string;
 };
+
+type DetailSectionKey =
+  | "overview"
+  | "features"
+  | "stack"
+  | "roles"
+  | "problems";
+
+// 모달이 동시에 여러 개 열려도 마지막 모달이 닫힐 때만 body 스크롤을 되돌린다
+let bodyScrollLockCount = 0;
+let bodyOverflowBeforeLock = "";
+
+function lockBodyScroll() {
+  if (bodyScrollLockCount === 0) {
+    bodyOverflowBeforeLock = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+  }
+  bodyScrollLockCount += 1;
+}
+
+function unlockBodyScroll() {
+  bodyScrollLockCount = Math.max(0, bodyScrollLockCount - 1);
+  if (bodyScrollLockCount === 0) {
+    document.body.style.overflow = bodyOverflowBeforeLock;
+  }
+}
 
 function DetailSectionTitle({ number, title }: DetailSectionTitleProps) {
   return (
@@ -34,10 +66,27 @@ export default function ExperienceDetailModal({
   item,
   onClose,
 }: ExperienceDetailModalProps) {
-  const techStack = getSkillsByKeys(item.techStack);
   const [isClosing, setIsClosing] = useState(false);
   const closeTimeoutRef = useRef<number | null>(null);
   const isClosingRef = useRef(false);
+  const titleId = `experience-detail-title-${item.id}`;
+  const award = getAwardByProject(item.id);
+
+  // 내용이 빈 섹션은 숨기고, 보이는 섹션끼리 번호를 다시 매긴다
+  const sectionVisibility: Record<DetailSectionKey, boolean> = {
+    overview: item.overview.length > 0,
+    features: item.features.length > 0,
+    stack: item.stack.length > 0,
+    roles: item.roles.length > 0,
+    problems: item.problems.length > 0,
+  };
+  const visibleSections = (
+    Object.keys(sectionVisibility) as DetailSectionKey[]
+  ).filter((key) => sectionVisibility[key]);
+  const getSectionNumber = (key: DetailSectionKey) =>
+    visibleSections.indexOf(key) + 1;
+  const hasBothDetailColumns =
+    sectionVisibility.roles && sectionVisibility.problems;
 
   const handleRequestClose = useCallback(() => {
     if (isClosingRef.current) return;
@@ -50,10 +99,17 @@ export default function ExperienceDetailModal({
   }, [onClose]);
 
   useEffect(() => {
-    const originalOverflow = document.body.style.overflow;
+    lockBodyScroll();
 
-    document.body.style.overflow = "hidden";
+    return () => {
+      unlockBodyScroll();
+      if (closeTimeoutRef.current) {
+        window.clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, []);
 
+  useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         handleRequestClose();
@@ -63,11 +119,7 @@ export default function ExperienceDetailModal({
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", handleKeyDown);
-      if (closeTimeoutRef.current) {
-        window.clearTimeout(closeTimeoutRef.current);
-      }
     };
   }, [handleRequestClose]);
 
@@ -82,9 +134,10 @@ export default function ExperienceDetailModal({
       <div
         className={styles.dialog}
         data-closing={isClosing}
+        data-category={item.category}
         role="dialog"
         aria-modal="true"
-        aria-labelledby={`experience-detail-title-${item.slug}`}
+        aria-labelledby={titleId}
       >
         <header className={styles.header}>
           <div className={styles.headerStart}>
@@ -98,113 +151,179 @@ export default function ExperienceDetailModal({
               Back
             </button>
 
-            <p className={styles.headerLabel}>{item.title}</p>
+            <div className={styles.headerTitleGroup}>
+              <p id={titleId} className={styles.headerLabel}>
+                {item.title}
+              </p>
+              {item.subtitle ? (
+                <p className={styles.headerSubLabel}>{item.subtitle}</p>
+              ) : null}
+            </div>
           </div>
 
-          <a
-            href={item.githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={styles.headerLink}
-          >
-            <GitBranch className={styles.githubIcon} aria-hidden="true" />
-            GitHub
-            <ArrowUpRight
-              className={styles.githubLinkArrow}
-              aria-hidden="true"
-            />
-          </a>
+          {item.link || item.github ? (
+            <div className={styles.headerLinks}>
+              {item.link ? (
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.headerLink}
+                  aria-label={`Link - ${item.title} (새 탭)`}
+                >
+                  <Link2 className={styles.headerLinkIcon} aria-hidden="true" />
+                  Link
+                  <ArrowUpRight
+                    className={styles.headerLinkArrow}
+                    aria-hidden="true"
+                  />
+                </a>
+              ) : null}
+
+              {item.github ? (
+                <a
+                  href={item.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.headerLink}
+                  aria-label={`GitHub - ${item.title} (새 탭)`}
+                >
+                  <GitBranch
+                    className={styles.headerLinkIcon}
+                    aria-hidden="true"
+                  />
+                  GitHub
+                  <ArrowUpRight
+                    className={styles.headerLinkArrow}
+                    aria-hidden="true"
+                  />
+                </a>
+              ) : null}
+            </div>
+          ) : null}
         </header>
 
         <div className={styles.body}>
           <div className={styles.hero}>
-            <h2
-              id={`experience-detail-title-${item.slug}`}
-              className={styles.heroTitle}
-            >
-              {item.headline}
-            </h2>
+            <h2 className={styles.heroTitle}>{item.summary}</h2>
 
             <div className={styles.metaRow}>
               <span className={styles.metaItem}>
                 <span className={styles.metaDot} aria-hidden="true" />
-                <span className={styles.metaText}>{item.period}</span>
+                <span className={styles.metaText}>
+                  {formatExperiencePeriod(item.period)}
+                </span>
               </span>
               <span className={styles.metaItem}>
                 <span className={styles.metaDot} aria-hidden="true" />
-                <span className={styles.metaText}>
-                  {experienceCategoryLabels[item.category]}
-                </span>
+                <span className={styles.metaCategory}>{item.category}</span>
               </span>
+              {award ? (
+                <span className={styles.metaAward}>
+                  <Trophy className={styles.metaAwardIcon} aria-hidden="true" />
+                  {award.name}
+                </span>
+              ) : null}
             </div>
           </div>
 
-          <div className={styles.overviewLayout}>
-            <div className={styles.imageCard}>
-              <Image
-                src={item.image.src}
-                alt={item.image.alt}
-                width={item.image.width}
-                height={item.image.height}
-                className={styles.coverImage}
-                priority
-              />
-            </div>
+          <div className={styles.sections}>
+            {sectionVisibility.overview ? (
+              <section className={styles.section}>
+                <DetailSectionTitle
+                  number={getSectionNumber("overview")}
+                  title="개요"
+                />
+                <p className={styles.overviewText}>{item.overview}</p>
+              </section>
+            ) : null}
 
-            <section className={styles.sidePanel}>
-              <DetailSectionTitle number="1" title="프로젝트 개요" />
-              <p className={styles.overviewText}>{item.overview}</p>
-            </section>
-          </div>
+            {sectionVisibility.features ? (
+              <section className={styles.section}>
+                <DetailSectionTitle
+                  number={getSectionNumber("features")}
+                  title="주요 기능"
+                />
+                <div
+                  className={styles.featureGrid}
+                  data-columns={item.features.length > 1 ? 2 : 1}
+                >
+                  {item.features.map((feature) => (
+                    <article key={feature.title} className={styles.featureCard}>
+                      <h4 className={styles.featureTitle}>{feature.title}</h4>
+                      <p className={styles.featureDescription}>
+                        {feature.desc}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
-          <section className={styles.section}>
-            <DetailSectionTitle number="2" title="주요 기능" />
-            <div className={styles.featureGrid}>
-              {item.keyFeatures.map((feature) => (
-                <article key={feature.title} className={styles.featureCard}>
-                  <h4 className={styles.featureTitle}>{feature.title}</h4>
-                  <p className={styles.featureDescription}>
-                    {feature.description}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </section>
+            {sectionVisibility.stack ? (
+              <section className={styles.section}>
+                <DetailSectionTitle
+                  number={getSectionNumber("stack")}
+                  title="기술 스택"
+                />
+                <div className={styles.techStackGroup}>
+                  {item.stack.map((name) => (
+                    <SkillPill
+                      key={name}
+                      skill={getTechBadge(name)}
+                      size="small"
+                    />
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
-          <section className={styles.section}>
-            <DetailSectionTitle number="3" title="기술 스택" />
-            <div className={styles.techStackGroup}>
-              {techStack.map((skill) => (
-                <SkillPill key={skill.key} skill={skill} size="small" />
-              ))}
-            </div>
-          </section>
+            {sectionVisibility.roles || sectionVisibility.problems ? (
+              <div
+                className={styles.detailColumns}
+                data-columns={hasBothDetailColumns ? 2 : 1}
+              >
+                {sectionVisibility.roles ? (
+                  <section className={styles.section}>
+                    <DetailSectionTitle
+                      number={getSectionNumber("roles")}
+                      title="맡은 역할"
+                    />
+                    <ul className={styles.roleList}>
+                      {item.roles.map((roleItem) => (
+                        <li key={roleItem} className={styles.roleItem}>
+                          {roleItem}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                ) : null}
 
-          <div className={styles.detailColumns}>
-            <section className={styles.sectionCard}>
-              <DetailSectionTitle number="4" title="맡은 역할" />
-              <ul className={styles.roleList}>
-                {item.role.map((roleItem) => (
-                  <li key={roleItem} className={styles.roleItem}>
-                    {roleItem}
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section className={styles.sectionCard}>
-              <DetailSectionTitle number="5" title="문제 해결" />
-              <div className={styles.problemList}>
-                {item.problemSolving.map((problem) => (
-                  <article key={problem.title} className={styles.problemCard}>
-                    <h4 className={styles.problemTitle}>{problem.title}</h4>
-                    <p className={styles.problemDescription}>
-                      {problem.description}
-                    </p>
-                  </article>
-                ))}
+                {sectionVisibility.problems ? (
+                  <section className={styles.section}>
+                    <DetailSectionTitle
+                      number={getSectionNumber("problems")}
+                      title="문제 해결"
+                    />
+                    <div className={styles.problemList}>
+                      {item.problems.map((problem) => (
+                        <article
+                          key={problem.title}
+                          className={styles.problemCard}
+                        >
+                          <h4 className={styles.problemTitle}>
+                            {problem.title}
+                          </h4>
+                          <p className={styles.problemDescription}>
+                            {problem.desc}
+                          </p>
+                        </article>
+                      ))}
+                    </div>
+                  </section>
+                ) : null}
               </div>
-            </section>
+            ) : null}
           </div>
         </div>
       </div>

@@ -19,7 +19,19 @@ export type SkillAccent =
   | "mysql"
   | "git"
   | "figma"
-  | "docker";
+  | "docker"
+  | "vite"
+  | "express"
+  | "githubactions"
+  | "cloudflare"
+  | "opencv"
+  | "mediapipe"
+  | "yolo"
+  | "pandas"
+  | "hadoop"
+  | "spark"
+  | "qwen"
+  | "awsrds";
 
 export type SkillKey =
   | "javascript"
@@ -47,6 +59,13 @@ export interface SkillItem {
   icon: string | string[];
   categories: Exclude<SkillCategory, "all">[];
   accent: SkillAccent;
+  secondaryAccent?: SkillAccent;
+}
+
+export interface TechBadge {
+  name: string;
+  icon?: string | string[];
+  accent?: SkillAccent;
   secondaryAccent?: SkillAccent;
 }
 
@@ -154,18 +173,38 @@ export const skills: SkillItem[] = [
   },
 ];
 
-export const skillMap = skills.reduce(
-  (acc, skill) => {
-    acc[skill.key] = skill;
-    return acc;
-  },
-  {} as Record<SkillKey, SkillItem>,
-);
+// Experience 기술 스택 이름 → 아이콘(Simple Icons slug 또는 /public 경로)과 브랜드 색
+// 목록에 없는 이름은 아이콘 없이 기본 색 pill로 보인다 (예: llama.cpp, K-Means)
+const techBadges: Record<string, Omit<TechBadge, "name">> = {
+  JavaScript: { icon: "javascript", accent: "javascript" },
+  TypeScript: { icon: "typescript", accent: "typescript" },
+  Python: { icon: "python", accent: "python" },
+  HTML: { icon: "html5", accent: "html" },
+  CSS: { icon: "css", accent: "css" },
+  React: { icon: "react", accent: "react" },
+  "Next.js": { icon: "nextdotjs", accent: "nextjs" },
+  Vite: { icon: "vite", accent: "vite" },
+  "Node.js": { icon: "nodedotjs", accent: "nodejs" },
+  Express: { icon: "express", accent: "express" },
+  MySQL: { icon: "mysql", accent: "mysql" },
+  // Simple Icons에 AWS 아이콘이 없어 범용 데이터베이스 아이콘을 쓴다
+  "AWS RDS": { icon: "/icons/database.svg", accent: "awsrds" },
+  Docker: { icon: "docker", accent: "docker" },
+  "GitHub Actions": { icon: "githubactions", accent: "githubactions" },
+  "Cloudflare Workers": { icon: "cloudflareworkers", accent: "cloudflare" },
+  OpenCV: { icon: "opencv", accent: "opencv" },
+  MediaPipe: { icon: "mediapipe", accent: "mediapipe" },
+  YOLO: { icon: "yolo", accent: "yolo" },
+  Pandas: { icon: "pandas", accent: "pandas" },
+  Hadoop: { icon: "apachehadoop", accent: "hadoop" },
+  Spark: { icon: "apachespark", accent: "spark" },
+  "Qwen2.5-3B-Instruct": { icon: "qwen", accent: "qwen" },
+};
 
-export function getSkillIconSrc(icon: string) {
-  return `https://cdn.simpleicons.org/${icon}`;
+export function getTechBadge(name: string): TechBadge {
+  return { name, ...techBadges[name] };
 }
 
-export function getSkillsByKeys(keys: readonly SkillKey[]) {
-  return keys.map((key) => skillMap[key]);
+export function getSkillIconSrc(icon: string) {
+  return icon.startsWith("/") ? icon : `https://cdn.simpleicons.org/${icon}`;
 }

@@ -18,6 +18,27 @@
   --color-skill-git: #f05032;
   --color-skill-figma: #a259ff;
   --color-skill-docker: #2496ed;
+  --color-skill-vite: #9135ff;
+  --color-skill-express: #111111;
+  --color-skill-githubactions: #2088ff;
+  --color-skill-cloudflare: #f38020;
+  --color-skill-opencv: #5c3ee8;
+  --color-skill-mediapipe: #0097a7;
+  --color-skill-yolo: #111f68;
+  --color-skill-pandas: #150458;
+  --color-skill-hadoop: #66ccff;
+  --color-skill-spark: #e25a1c;
+  --color-skill-qwen: #6950ef;
+  --color-skill-awsrds: #527fff;
+
+  /* experience category */
+  --color-category-project: #c4b5fd;
+  --color-category-activity: #6ee7b7;
+  --color-category-study: #fdba74;
+
+  /* award / certificate */
+  --color-award: #fcd34d;
+  --color-certificate: #7dd3fc;
 }
 
 @theme inline {

@@ -26,6 +26,12 @@
   --color-skill-mediapipe: #0097a7;
   --color-skill-yolo: #111f68;
   --color-skill-pandas: #150458;
+  --color-skill-numpy: #013243;
+  --color-skill-scikitlearn: #f7931e;
+  --color-skill-pytorch: #ee4c2c;
+  --color-skill-huggingface: #ffd21e;
+  --color-skill-neo4j: #4581c3;
+  --color-skill-dbeaver: #382923;
   --color-skill-hadoop: #66ccff;
   --color-skill-spark: #e25a1c;
   --color-skill-qwen: #6950ef;

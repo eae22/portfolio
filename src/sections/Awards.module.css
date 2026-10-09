@@ -1,0 +1,118 @@
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 0.875rem;
+}
+
+.panel {
+  --panel-accent: var(--color-award);
+  padding: 1.25rem 1.4rem 0.4rem;
+  border: 1px solid rgb(255 255 255 / 0.07);
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 0.025);
+}
+
+.panel[data-kind="certificate"] {
+  --panel-accent: var(--color-certificate);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.85rem;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.panelIcon {
+  width: 1.05rem;
+  height: 1.05rem;
+  color: var(--panel-accent);
+}
+
+.panelCount {
+  margin-left: auto;
+  color: var(--color-text-tertiary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.list {
+  display: grid;
+}
+
+/* 한 항목 = 이름 + 날짜(오른쪽) / 기관 · 관련 프로젝트 */
+.item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 1rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid rgb(255 255 255 / 0.06);
+}
+
+.itemName {
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+.itemDate {
+  padding-top: 0.1rem;
+  color: var(--color-text-tertiary);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.itemMeta {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 0.2rem 0.4rem;
+  color: var(--color-text-tertiary);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.projectLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0;
+  color: var(--color-category-project);
+  font: inherit;
+  font-weight: 600;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-underline-offset: 3px;
+}
+
+.projectLink:hover {
+  text-decoration: underline;
+}
+
+.projectLink:focus-visible {
+  outline: 2px solid var(--color-category-project);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.projectLinkIcon {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+@media (width <= 768px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

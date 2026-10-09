@@ -1,0 +1,291 @@
+.section {
+  --experience-enter-distance: 12px;
+  --experience-rail-width: 6.5rem;
+  --experience-group-gap: 2.5rem;
+}
+
+.timeline {
+  display: grid;
+}
+
+.yearGroup {
+  display: grid;
+  grid-template-columns: var(--experience-rail-width) minmax(0, 1fr);
+  padding-bottom: var(--experience-group-gap);
+}
+
+.yearGroup:last-child {
+  padding-bottom: 0;
+}
+
+.yearRail {
+  position: relative;
+}
+
+/* 연도 점들을 잇는 세로선 (다음 연도 점까지 이어지도록 그 점 위치만큼 더 내린다) */
+.yearRail::before {
+  content: "";
+  position: absolute;
+  top: 1.1rem;
+  bottom: calc((var(--experience-group-gap) + 1.1rem) * -1);
+  left: calc(0.325rem - 0.5px);
+  width: 1px;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.yearGroup:last-child .yearRail::before {
+  bottom: 0;
+}
+
+.yearLabel {
+  position: sticky;
+  top: 6.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.3rem;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.yearDot {
+  position: relative;
+  z-index: 1;
+  width: 0.65rem;
+  height: 0.65rem;
+  flex-shrink: 0;
+  border: 2px solid rgb(255 255 255 / 0.45);
+  border-radius: 9999px;
+  background: var(--color-bg-canvas);
+  box-shadow: 0 0 0 4px var(--color-bg-canvas);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem;
+}
+
+.card {
+  --category-accent: var(--color-category-project);
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.3rem 1.4rem 1.15rem;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  border: 1px solid rgb(255 255 255 / 0.07);
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 0.025);
+  cursor: pointer;
+  appearance: none;
+  user-select: none;
+  /* backwards: 끝난 뒤에는 transform을 놓아줘야 hover 이동이 먹는다 */
+  animation: experience-card-enter var(--duration-emphasis) var(--ease-out)
+    backwards;
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+.card[data-category="Activity"] {
+  --category-accent: var(--color-category-activity);
+}
+
+.card[data-category="Study"] {
+  --category-accent: var(--color-category-study);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgb(255 255 255 / 0.14);
+  background: rgb(255 255 255 / 0.045);
+}
+
+.card:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--category-accent) 70%, white 30%);
+  outline-offset: 3px;
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+.category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--category-accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.categoryDot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 9999px;
+  background: var(--category-accent);
+}
+
+.cardPeriod {
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.award {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+  color: var(--color-award);
+  font-weight: 600;
+}
+
+.awardIcon {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.cardHeading {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.cardTitle {
+  color: var(--color-text-primary);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.cardSubtitle {
+  color: var(--color-text-tertiary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.cardSummary {
+  color: color-mix(in srgb, var(--color-text-secondary) 90%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  white-space: pre-line;
+  /* 마지막 줄에 한 단어만 남지 않게 */
+  text-wrap: pretty;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.1rem;
+}
+
+.cardStack {
+  display: flex;
+  min-width: 0;
+  gap: 0.3rem;
+  color: var(--color-text-tertiary);
+  font-size: 0.76rem;
+}
+
+/* 좁으면 이름만 말줄임되고 "+N"은 항상 보인다 */
+.cardStackNames {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cardStackMore {
+  flex-shrink: 0;
+}
+
+.cardArrow {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  margin-left: auto;
+  color: var(--color-text-tertiary);
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out);
+}
+
+.card:hover .cardArrow {
+  color: var(--color-text-primary);
+  transform: translate(2px, -2px);
+}
+
+@keyframes experience-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--experience-enter-distance));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (width <= 768px) {
+  .yearGroup {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.9rem;
+    padding-bottom: 2rem;
+  }
+
+  .yearRail::before {
+    display: none;
+  }
+
+  /* 좁은 화면에서는 세로 레일 대신 연도 옆 가로선 */
+  .yearLabel {
+    position: static;
+    padding-top: 0;
+  }
+
+  .yearLabel::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--color-border-subtle);
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cardArrow {
+    animation: none;
+    transition-duration: 0ms;
+  }
+
+  .card:hover,
+  .card:hover .cardArrow {
+    transform: none;
+  }
+}

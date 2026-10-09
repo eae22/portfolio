@@ -1,0 +1,30 @@
+.root {
+  --reveal-delay: 0ms;
+  --reveal-distance: 32px;
+  --reveal-duration: 780ms;
+  --reveal-scale: 0.985;
+  opacity: 0;
+  transform: translateY(var(--reveal-distance)) scale(var(--reveal-scale));
+  filter: blur(10px);
+  transition:
+    opacity var(--reveal-duration) var(--ease-out) var(--reveal-delay),
+    transform var(--reveal-duration) var(--ease-out) var(--reveal-delay),
+    filter var(--reveal-duration) var(--ease-out) var(--reveal-delay);
+  will-change: opacity, transform, filter;
+}
+
+.root[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+    will-change: auto;
+  }
+}

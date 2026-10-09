@@ -4,7 +4,7 @@
 
 ## Notice
 
-- 배포 링크: https://portfolio-eae22.vercel.app/ (main 브랜치 기준 정식 사이트)
+- 배포 링크: https://portfolio-eae22.vercel.app/ (main 브랜치 기준)
 
 ## Tech Stack
 

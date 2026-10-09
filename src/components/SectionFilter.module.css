@@ -281,9 +281,11 @@
     transition-duration: 0ms;
   }
 
+  /* 선택된 버튼의 점 깜빡임은 선택자가 더 구체적이라 같은 선택자로 따로 꺼야 한다 */
   .button::before,
   .button::after,
   .dot,
+  .button[data-active="true"] .dot,
   .label {
     transition-duration: 0ms;
     animation: none;

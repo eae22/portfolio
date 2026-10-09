@@ -105,9 +105,14 @@ export default function ExperienceDetailModal({
 
     isClosingRef.current = true;
     setIsClosing(true);
+    // 움직임 줄이기 설정이면 닫힘 애니메이션이 없으므로 기다리지 않고 바로 닫는다
+    const closeDelay = window.matchMedia("(prefers-reduced-motion: reduce)")
+      .matches
+      ? 0
+      : 320;
     closeTimeoutRef.current = window.setTimeout(() => {
       onClose();
-    }, 320);
+    }, closeDelay);
   }, [onClose]);
 
   useEffect(() => {

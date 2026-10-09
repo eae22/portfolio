@@ -1,6 +1,10 @@
 "use client";
 
-import { ArrowUpRight, Trophy } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChartNoAxesColumnIncreasing,
+  Trophy,
+} from "lucide-react";
 import { useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionFilter from "@/components/SectionFilter";
@@ -9,12 +13,14 @@ import SectionLayout from "@/components/SectionLayout";
 import { getAwardByProject } from "@/content/achievements";
 import {
   compareExperienceByLatest,
+  describeExperienceRanking,
   type ExperienceFilter,
   type ExperienceItem,
   experienceCategoryColors,
   experienceFilters,
   experiences,
   formatExperiencePeriod,
+  formatExperienceRanking,
   getExperienceYear,
 } from "@/content/experience";
 import styles from "./Experience.module.css";
@@ -92,6 +98,19 @@ function ExperienceCard({
           <span className={styles.award}>
             <Trophy className={styles.awardIcon} aria-hidden="true" />
             {award.shortName}
+          </span>
+        ) : null}
+        {item.ranking ? (
+          <span
+            className={styles.ranking}
+            data-tooltip={describeExperienceRanking(item.ranking)}
+            data-tooltip-side="left"
+          >
+            <ChartNoAxesColumnIncreasing
+              className={styles.awardIcon}
+              aria-hidden="true"
+            />
+            {formatExperienceRanking(item.ranking)}
           </span>
         ) : null}
       </span>

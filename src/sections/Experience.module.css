@@ -148,13 +148,30 @@
   font-variant-numeric: tabular-nums;
 }
 
-.award {
+/* 수상(노란 트로피)과 대회 순위(하늘색 막대)는 카드 오른쪽 위 같은 자리에 붙는다 */
+.award,
+.ranking {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   margin-left: auto;
   color: var(--color-award);
   font-weight: 600;
+}
+
+.ranking {
+  color: var(--color-ranking);
+}
+
+/* 둘 다 있으면 오른쪽에 나란히 둔다 */
+.award + .ranking {
+  margin-left: 0;
+}
+
+/* 키보드로 카드에 초점이 오면 순위 말풍선("1,090팀 중 58위")도 함께 보여준다 */
+.card:focus-visible .ranking::after {
+  opacity: 1;
+  transform: translate(0, -50%);
 }
 
 .awardIcon {

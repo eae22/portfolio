@@ -39,6 +39,7 @@
   /* award / certificate */
   --color-award: #fcd34d;
   --color-certificate: #7dd3fc;
+  --color-ranking: #7dd3fc;
 }
 
 @theme inline {

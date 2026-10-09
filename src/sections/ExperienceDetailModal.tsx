@@ -3,6 +3,7 @@
 import {
   ArrowLeft,
   ArrowUpRight,
+  ChartNoAxesColumnIncreasing,
   GitBranch,
   Link2,
   Trophy,
@@ -12,8 +13,10 @@ import { createPortal } from "react-dom";
 import SkillPill from "@/components/SkillPill";
 import { getAwardByProject } from "@/content/achievements";
 import {
+  describeExperienceRanking,
   type ExperienceItem,
   formatExperiencePeriod,
+  formatExperienceRanking,
 } from "@/content/experience";
 import { getTechBadge } from "@/content/skills";
 import styles from "./ExperienceDetailModal.module.css";
@@ -248,6 +251,18 @@ export default function ExperienceDetailModal({
                 <span className={styles.metaAward}>
                   <Trophy className={styles.metaAwardIcon} aria-hidden="true" />
                   {award.name}
+                </span>
+              ) : null}
+              {item.ranking ? (
+                <span
+                  className={styles.metaRanking}
+                  data-tooltip={describeExperienceRanking(item.ranking)}
+                >
+                  <ChartNoAxesColumnIncreasing
+                    className={styles.metaAwardIcon}
+                    aria-hidden="true"
+                  />
+                  {formatExperienceRanking(item.ranking)}
                 </span>
               ) : null}
             </div>

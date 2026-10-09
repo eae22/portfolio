@@ -31,6 +31,12 @@ export interface ExperienceProblem {
   desc: string;
 }
 
+// 대회 순위. 화면에는 "상위 5.3%"처럼 비율로 보인다
+export interface ExperienceRanking {
+  place: number;
+  total: number;
+}
+
 export interface ExperienceItem {
   id: string;
   title: string;
@@ -38,6 +44,7 @@ export interface ExperienceItem {
   category: ExperienceCategory;
   tracks?: ExperienceTrack[];
   period: ExperiencePeriod;
+  ranking?: ExperienceRanking;
   summary: string;
   github?: string;
   link?: string;
@@ -601,6 +608,16 @@ export function compareExperienceByLatest(
 
 export function formatExperiencePeriod({ start, end }: ExperiencePeriod) {
   return start === end ? start : `${start} - ${end}`;
+}
+
+// 58 / 1090 → "상위 5.3%" (소수 첫째 자리 반올림)
+export function formatExperienceRanking({ place, total }: ExperienceRanking) {
+  return `상위 ${Math.round((place / total) * 1000) / 10}%`;
+}
+
+// 마우스를 올리면 보이는 원래 순위 → "1,090팀 중 58위"
+export function describeExperienceRanking({ place, total }: ExperienceRanking) {
+  return `${total.toLocaleString("ko-KR")}팀 중 ${place}위`;
 }
 
 export function getExperienceYear({ period }: ExperienceItem) {

@@ -218,18 +218,25 @@
   text-transform: uppercase;
 }
 
-.metaAward {
+/* 수상과 대회 순위 배지 (모양은 같고 색만 다르다) */
+.metaAward,
+.metaRanking {
+  --meta-badge-color: var(--color-award);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   padding: 0.3rem 0.65rem;
-  color: var(--color-award);
+  color: var(--meta-badge-color);
   font-size: 0.8rem;
   font-weight: 700;
   line-height: 1.2;
-  border: 1px solid color-mix(in srgb, var(--color-award) 34%, transparent);
+  border: 1px solid color-mix(in srgb, var(--meta-badge-color) 34%, transparent);
   border-radius: var(--radius-full);
-  background: color-mix(in srgb, var(--color-award) 10%, transparent);
+  background: color-mix(in srgb, var(--meta-badge-color) 10%, transparent);
+}
+
+.metaRanking {
+  --meta-badge-color: var(--color-ranking);
 }
 
 .metaAwardIcon {

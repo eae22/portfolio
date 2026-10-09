@@ -2,14 +2,16 @@
 
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+// 주소는 "/#섹션"으로 둔다. 404처럼 메인이 아닌 주소에서 눌러도 메인 페이지의 그 섹션으로 이동한다
 const navItems = [
-  { label: "Profile", href: "#profile", id: "profile" },
-  { label: "Skills", href: "#skills", id: "skills" },
-  { label: "Experience", href: "#experience", id: "experience" },
-  { label: "Awards", href: "#awards", id: "awards" },
-  { label: "Contact", href: "#contact", id: "contact" },
+  { label: "Profile", href: "/#profile", id: "profile" },
+  { label: "Skills", href: "/#skills", id: "skills" },
+  { label: "Experience", href: "/#experience", id: "experience" },
+  { label: "Awards", href: "/#awards", id: "awards" },
+  { label: "Contact", href: "/#contact", id: "contact" },
 ];
 
 function getScrollBehavior(): ScrollBehavior {
@@ -30,6 +32,7 @@ function armClickRelease(
 }
 
 export default function Navigation() {
+  const pathname = usePathname();
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -231,8 +234,11 @@ export default function Navigation() {
   };
 
   const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
     setIsMenuOpen(false);
+    // 메인이 아닌 주소(404 등)에서는 가로채지 않고 링크 그대로 메인 페이지로 이동한다
+    if (pathname !== "/") return;
+
+    event.preventDefault();
     // 맨 위로 올라가는 동안 하이라이트가 섹션들을 훑지 않게 잠근다
     clickedSectionRef.current = "top";
     armClickRelease(clickedSectionRef, clickReleaseTimerRef);

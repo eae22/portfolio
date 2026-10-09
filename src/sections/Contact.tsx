@@ -1,9 +1,11 @@
 "use client";
 
 import { Check, Copy } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeader from "@/components/SectionHeader";
+
+type CopyStatus = "idle" | "copied" | "failed";
 
 const EMAIL = "eun0110@dgu.ac.kr";
 const GMAIL_COMPOSE_URL =
@@ -12,18 +14,28 @@ const GMAIL_COMPOSE_URL =
   `&su=${encodeURIComponent("포트폴리오 사이트 관련 문의드립니다")}`;
 
 export default function Contact() {
-  const [copied, setCopied] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<CopyStatus>("idle");
+  const resetTimerRef = useRef<number | undefined>(undefined);
+  const copied = copyStatus === "copied";
+
+  useEffect(() => {
+    return () => window.clearTimeout(resetTimerRef.current);
+  }, []);
 
   const handleCopyEmail = async () => {
+    // 연달아 누르면 이전 타이머가 "Copied!"를 일찍 지우지 않게 먼저 정리한다
+    window.clearTimeout(resetTimerRef.current);
+
     try {
       await navigator.clipboard.writeText(EMAIL);
-      setCopied(true);
+      setCopyStatus("copied");
 
-      window.setTimeout(() => {
-        setCopied(false);
+      resetTimerRef.current = window.setTimeout(() => {
+        setCopyStatus("idle");
       }, 1500);
     } catch (error) {
       console.error("이메일 복사에 실패했습니다.", error);
+      setCopyStatus("failed");
     }
   };
 
@@ -54,9 +66,8 @@ export default function Contact() {
                 className={`flex cursor-pointer items-center rounded-sm border px-4 py-2 text-xs font-semibold transition-all duration-200 active:scale-[0.98] md:px-5 ${
                   copied
                     ? "border-border-accent bg-surface-pill text-text-primary shadow-md"
-                    : "border-border-subtle bg-bg-elevated text-text-primary hover:scale-[1.03] hover:bg-surface-pill-hover hover:shadow-md"
+                    : "border-border-subtle text-text-primary hover:scale-[1.03] hover:bg-surface-pill-hover hover:shadow-md"
                 }`}
-                aria-live="polite"
               >
                 <span className="relative inline-flex h-4 min-w-22 items-center justify-center overflow-hidden text-center">
                   <span
@@ -69,7 +80,9 @@ export default function Contact() {
                     <span>Copy email</span>
                     <Copy aria-hidden="true" className="h-4 w-4 stroke-[2.2]" />
                   </span>
+                  {/* 스크린리더는 버튼 이름을 늘 "Copy email"로 읽고, 복사 결과는 아래 status 영역이 알린다 */}
                   <span
+                    aria-hidden="true"
                     className={`absolute inset-0 inline-flex w-full items-center justify-center gap-2 transition-all duration-200 ${
                       copied
                         ? "translate-y-0 opacity-100"
@@ -85,11 +98,18 @@ export default function Contact() {
                 </span>
               </button>
             </div>
-            <p
-              className={`text-xs transition-colors duration-200 ${
-                copied ? "text-text-secondary" : "text-text-tertiary"
-              }`}
-            ></p>
+            {/* 복사 결과를 스크린리더에 알리고, 실패하면 화면에도 안내한다 */}
+            <output
+              aria-live="polite"
+              className="block text-xs text-text-secondary"
+            >
+              {copyStatus === "copied" ? (
+                <span className="sr-only">이메일 주소를 복사했습니다</span>
+              ) : null}
+              {copyStatus === "failed"
+                ? "복사하지 못했어요. 주소를 직접 선택해 복사해 주세요."
+                : null}
+            </output>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a

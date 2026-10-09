@@ -1,6 +1,7 @@
 // Experience 데이터 (실제 이력 기준, docs/portfolio-experience.ts 2026.10 정정본에서 옮김)
 // - 기간 표기: "YYYY.MM". 진행 중이면 end: "Present"
-// - github / link 가 없으면 필드를 빼두고, 화면에서 버튼을 렌더링하지 않는다
+// - github / blog / link 가 없으면 필드를 빼두고, 화면에서 버튼을 렌더링하지 않는다
+//   (blog는 이 경험을 정리한 블로그 글, link는 배포 주소·논문처럼 그 밖의 공개 링크)
 // - subtitle: 제목 아래 작은 줄 (팀, 수업, 주최 등 괄호에 들어가던 내용)
 // - summary: 카드 한줄 소개. "\n"을 넣은 곳에서 줄이 바뀐다. 수상 내용은 배지로 보이므로 넣지 않는다
 // - TODO 주석이 붙은 값은 본인이 채우거나 확인해야 함 (확인 전에는 사이트에 노출하지 말 것)
@@ -48,6 +49,7 @@ export interface ExperienceItem {
   summary: string;
   github?: string;
   link?: string;
+  blog?: string;
   overview: string;
   features: ExperienceFeature[];
   stack: string[];

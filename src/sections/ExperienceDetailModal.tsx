@@ -6,6 +6,7 @@ import {
   ChartNoAxesColumnIncreasing,
   GitBranch,
   Link2,
+  NotebookPen,
   Trophy,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -188,7 +189,7 @@ export default function ExperienceDetailModal({
             </div>
           </div>
 
-          {item.link || item.github ? (
+          {item.link || item.blog || item.github ? (
             <div className={styles.headerLinks}>
               {item.link ? (
                 <a
@@ -200,6 +201,27 @@ export default function ExperienceDetailModal({
                 >
                   <Link2 className={styles.headerLinkIcon} aria-hidden="true" />
                   Link
+                  <ArrowUpRight
+                    className={styles.headerLinkArrow}
+                    aria-hidden="true"
+                  />
+                </a>
+              ) : null}
+
+              {/* 블로그 글은 Profile의 Blog 버튼과 같은 이름·아이콘으로 보여준다 */}
+              {item.blog ? (
+                <a
+                  href={item.blog}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.headerLink}
+                  aria-label={`Blog - ${item.title} (새 탭)`}
+                >
+                  <NotebookPen
+                    className={styles.headerLinkIcon}
+                    aria-hidden="true"
+                  />
+                  Blog
                   <ArrowUpRight
                     className={styles.headerLinkArrow}
                     aria-hidden="true"

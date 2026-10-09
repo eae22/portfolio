@@ -1,0 +1,147 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms var(--ease-out);
+}
+
+.root[data-visible="true"] {
+  opacity: 1;
+}
+
+.anchor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+/* 크기 없는 점으로 커서 위치(앵커 원점)에 두고, 늘어나고 회전하는 기준점도 그 점으로 맞춘다 */
+.shape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* 로고와 같은 하늘색 빛나는 점 */
+.dot {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #e0f2fe, #bae6fd 50%, #67e8f9);
+  box-shadow: 0 0 12px rgb(125 211 252 / 0.65);
+  transition:
+    transform 200ms var(--ease-out),
+    opacity 200ms var(--ease-out);
+}
+
+/* 상세가 열리는 카드 위에서 점 대신 나타나는 물음표 */
+.question {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #bae6fd;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 0 10px rgb(125 211 252 / 0.7);
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-25deg) scale(0.3);
+  transition:
+    transform 340ms var(--ease-bounce),
+    opacity 200ms var(--ease-out);
+}
+
+.ring {
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgb(186 230 253 / 0.55);
+  border-radius: 9999px;
+  background-color: rgb(186 230 253 / 0);
+  transition:
+    transform 340ms var(--ease-out),
+    background-color 340ms var(--ease-out),
+    border-color 340ms var(--ease-out);
+}
+
+.ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border: 1.5px solid rgb(186 230 253 / 0.7);
+  border-radius: 9999px;
+  opacity: 0;
+}
+
+.ripple[data-active="true"] {
+  animation: cursor-ripple 420ms var(--ease-out);
+}
+
+/* 링크·버튼·카드 위: 링이 커지고 옅게 채워진다 */
+.root[data-state="link"] .ring,
+.root[data-state="detail"] .ring {
+  transform: scale(1.6);
+  border-color: rgb(186 230 253 / 0.85);
+  background-color: rgb(186 230 253 / 0.12);
+}
+
+.root[data-state="link"] .dot {
+  transform: scale(0.5);
+}
+
+/* 카드 위: 점이 사라지고 물음표가 기울어진 채 튀어나와 선다 */
+.root[data-state="detail"] .dot {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.root[data-state="detail"] .question {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+}
+
+/* 누르는 동안 꾹 눌린다 */
+.root[data-pressed="true"] .ring {
+  transform: scale(0.8);
+}
+
+.root[data-state="link"][data-pressed="true"] .ring,
+.root[data-state="detail"][data-pressed="true"] .ring {
+  transform: scale(1.35);
+}
+
+@keyframes cursor-ripple {
+  from {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root,
+  .dot,
+  .question,
+  .ring {
+    transition-duration: 0ms;
+  }
+
+  .ripple[data-active="true"] {
+    animation: none;
+  }
+}

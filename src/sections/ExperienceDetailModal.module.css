@@ -55,6 +55,11 @@
   animation: modal-dialog-exit 260ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+/* 열릴 때 대화상자 자체에 포커스를 두므로 테두리는 숨긴다 (안의 버튼들은 기본 포커스 표시 유지) */
+.dialog:focus {
+  outline: none;
+}
+
 .dialog[data-category="Activity"] {
   --category-accent: var(--color-category-activity);
 }

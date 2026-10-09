@@ -1,0 +1,5 @@
+/* 커스텀 커서가 켜진 동안(마우스 기기)만 기본 커서를 숨긴다. CustomCursor가 html에 data-custom-cursor를 붙인다 */
+html[data-custom-cursor],
+html[data-custom-cursor] * {
+  cursor: none;
+}

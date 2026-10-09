@@ -8,6 +8,7 @@ import {
   Trophy,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import SkillPill from "@/components/SkillPill";
 import { getAwardByProject } from "@/content/achievements";
 import {
@@ -34,22 +35,30 @@ type DetailSectionKey =
   | "roles"
   | "problems";
 
-// 모달이 동시에 여러 개 열려도 마지막 모달이 닫힐 때만 body 스크롤을 되돌린다
-let bodyScrollLockCount = 0;
+// 모달이 열려 있는 동안 뒤 페이지를 잠근다: 스크롤을 막고, 헤더와 본문을 inert로 만들어
+// Tab 포커스와 스크린리더가 모달 밖으로 나가지 않게 한다. 마지막 모달이 닫힐 때만 되돌린다
+const BACKGROUND_SELECTOR = "body > header, body > main";
+let backgroundLockCount = 0;
 let bodyOverflowBeforeLock = "";
 
-function lockBodyScroll() {
-  if (bodyScrollLockCount === 0) {
+function lockBackground() {
+  if (backgroundLockCount === 0) {
     bodyOverflowBeforeLock = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    for (const element of document.querySelectorAll(BACKGROUND_SELECTOR)) {
+      element.setAttribute("inert", "");
+    }
   }
-  bodyScrollLockCount += 1;
+  backgroundLockCount += 1;
 }
 
-function unlockBodyScroll() {
-  bodyScrollLockCount = Math.max(0, bodyScrollLockCount - 1);
-  if (bodyScrollLockCount === 0) {
+function unlockBackground() {
+  backgroundLockCount = Math.max(0, backgroundLockCount - 1);
+  if (backgroundLockCount === 0) {
     document.body.style.overflow = bodyOverflowBeforeLock;
+    for (const element of document.querySelectorAll(BACKGROUND_SELECTOR)) {
+      element.removeAttribute("inert");
+    }
   }
 }
 
@@ -69,6 +78,7 @@ export default function ExperienceDetailModal({
   const [isClosing, setIsClosing] = useState(false);
   const closeTimeoutRef = useRef<number | null>(null);
   const isClosingRef = useRef(false);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
   const titleId = `experience-detail-title-${item.id}`;
   const award = getAwardByProject(item.id);
 
@@ -99,12 +109,23 @@ export default function ExperienceDetailModal({
   }, [onClose]);
 
   useEffect(() => {
-    lockBodyScroll();
+    // 모달을 연 버튼(카드 등)을 기억했다가 닫힐 때 포커스를 돌려준다
+    const opener =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
+    lockBackground();
+    // 처음 포커스는 대화상자 자체에 둔다 (스크린리더가 제목을 읽고, 첫 Tab이 Back으로 간다)
+    dialogRef.current?.focus({ preventScroll: true });
 
     return () => {
-      unlockBodyScroll();
+      unlockBackground();
       if (closeTimeoutRef.current) {
         window.clearTimeout(closeTimeoutRef.current);
+      }
+      if (opener?.isConnected) {
+        opener.focus({ preventScroll: true });
       }
     };
   }, []);
@@ -123,21 +144,26 @@ export default function ExperienceDetailModal({
     };
   }, [handleRequestClose]);
 
-  return (
+  // body 바로 아래에 그려야 뒤 페이지(header, main)만 inert로 잠글 수 있다
+  return createPortal(
     <div className={styles.backdrop} data-closing={isClosing}>
+      {/* 바깥 클릭으로 닫기용 레이어. 키보드·스크린리더용 닫기는 Back 버튼이 맡는다 */}
       <button
         type="button"
         className={styles.dismissLayer}
         onClick={handleRequestClose}
-        aria-label="경험 상세 모달 닫기"
+        tabIndex={-1}
+        aria-hidden="true"
       />
       <div
+        ref={dialogRef}
         className={styles.dialog}
         data-closing={isClosing}
         data-category={item.category}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        tabIndex={-1}
       >
         <header className={styles.header}>
           <div className={styles.headerStart}>
@@ -327,6 +353,7 @@ export default function ExperienceDetailModal({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

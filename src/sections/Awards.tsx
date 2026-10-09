@@ -59,6 +59,7 @@ export default function Awards() {
                           className={styles.projectLink}
                           onClick={() => setActiveExperience(project)}
                           aria-haspopup="dialog"
+                          data-cursor="detail"
                           aria-label={`${project.title} 상세 보기`}
                         >
                           {project.title}

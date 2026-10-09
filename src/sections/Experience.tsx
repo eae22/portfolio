@@ -78,6 +78,7 @@ function ExperienceCard({
       onClick={() => onSelect(item)}
       aria-haspopup="dialog"
       aria-label={`${item.title} 상세 보기`}
+      data-cursor="detail"
     >
       <span className={styles.cardMeta}>
         <span className={styles.category}>

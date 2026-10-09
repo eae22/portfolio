@@ -35,21 +35,28 @@ export default function Intro() {
             </ScrollReveal>
 
             <ScrollReveal delay={170}>
-              <div className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
-                <div className="h-7 w-1 rounded-full bg-sky-300/85 shadow-[0_0_12px_rgba(125,211,252,0.22)]" />
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-sky-200/78">
-                  Focus
-                </p>
-                <span className="text-text-tertiary/60">|</span>
-                {["정보 구조", "사용자 흐름", "문제 해결"].map((keyword) => (
-                  <span
-                    key={keyword}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-text-secondary"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-sky-200/70" />
-                    {keyword}
-                  </span>
-                ))}
+              {/* 좁은 화면에서는 FOCUS 라벨을 위에, 키워드 세 개를 아래 한 줄에 둔다 */}
+              <div className="mt-7 flex flex-col items-center gap-2.5 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-3 sm:gap-y-2">
+                <div className="flex items-center gap-3">
+                  <div className="h-7 w-1 rounded-full bg-sky-300/85 shadow-[0_0_12px_rgba(125,211,252,0.22)]" />
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-sky-200/78">
+                    Focus
+                  </p>
+                </div>
+                <span className="hidden text-text-tertiary/60 sm:inline">
+                  |
+                </span>
+                <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
+                  {["정보 구조", "사용자 흐름", "문제 해결"].map((keyword) => (
+                    <span
+                      key={keyword}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-text-secondary"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-sky-200/70" />
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
               </div>
             </ScrollReveal>
 

@@ -28,7 +28,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="mx-auto max-w-5xl scroll-mt-16 px-6 py-24">
+    <section id="contact" className="mx-auto max-w-5xl px-6 py-24">
       <ScrollReveal delay={40}>
         <SectionHeader title="CONTACT" accent="contact" />
       </ScrollReveal>

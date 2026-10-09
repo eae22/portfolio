@@ -14,7 +14,7 @@ export default function SectionLayout({
   fullHeight = false,
 }: SectionLayoutProps) {
   const classes = [
-    "mx-auto max-w-5xl scroll-mt-16 px-6 py-24",
+    "mx-auto max-w-5xl px-6 py-24",
     fullHeight ? "min-h-screen" : "",
     className,
   ]

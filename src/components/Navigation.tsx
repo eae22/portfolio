@@ -12,6 +12,23 @@ const navItems = [
   { label: "Contact", href: "#contact", id: "contact" },
 ];
 
+function getScrollBehavior(): ScrollBehavior {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? "auto"
+    : "smooth";
+}
+
+// 메뉴·로고 클릭으로 스크롤되는 동안 scroll-spy를 잠근다. 스크롤이 150ms 멈추면(또는 스크롤이 없으면) 풀린다
+function armClickRelease(
+  lockRef: { current: string | null },
+  timerRef: { current: number | undefined },
+) {
+  window.clearTimeout(timerRef.current);
+  timerRef.current = window.setTimeout(() => {
+    lockRef.current = null;
+  }, 150);
+}
+
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,6 +46,9 @@ export default function Navigation() {
   });
   const navListRef = useRef<HTMLUListElement | null>(null);
   const itemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  // 메뉴 클릭으로 스크롤되는 동안은 클릭한 섹션을 활성으로 유지한다
+  const clickedSectionRef = useRef<string | null>(null);
+  const clickReleaseTimerRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const sections = navItems
@@ -38,6 +58,7 @@ export default function Navigation() {
     const updateActiveSection = () => {
       const viewportAnchor = window.innerHeight * 0.38;
       const firstSection = sections[0];
+      const lastSection = sections.at(-1);
 
       if (firstSection) {
         const firstRect = firstSection.getBoundingClientRect();
@@ -46,6 +67,16 @@ export default function Navigation() {
           setActiveSection(null);
           return;
         }
+      }
+
+      // 마지막 섹션은 짧아서 기준선까지 못 올라올 수 있으니, 페이지 끝에 닿으면 활성으로 본다
+      const isAtPageBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
+
+      if (isAtPageBottom && lastSection) {
+        setActiveSection(lastSection.id);
+        return;
       }
 
       const currentSection =
@@ -66,13 +97,41 @@ export default function Navigation() {
       }
     };
 
+    const handleScroll = () => {
+      if (clickedSectionRef.current) {
+        armClickRelease(clickedSectionRef, clickReleaseTimerRef);
+        return;
+      }
+
+      updateActiveSection();
+    };
+
+    const handleResize = () => {
+      if (!clickedSectionRef.current) {
+        updateActiveSection();
+      }
+    };
+
+    // 사용자가 직접 스크롤을 시작하면(휠·터치·키보드) 클릭 잠금을 바로 풀고 다시 계산하게 한다
+    const releaseClickLock = () => {
+      clickedSectionRef.current = null;
+      window.clearTimeout(clickReleaseTimerRef.current);
+    };
+
     updateActiveSection();
-    window.addEventListener("scroll", updateActiveSection, { passive: true });
-    window.addEventListener("resize", updateActiveSection);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("wheel", releaseClickLock, { passive: true });
+    window.addEventListener("touchstart", releaseClickLock, { passive: true });
+    window.addEventListener("keydown", releaseClickLock);
 
     return () => {
-      window.removeEventListener("scroll", updateActiveSection);
-      window.removeEventListener("resize", updateActiveSection);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("wheel", releaseClickLock);
+      window.removeEventListener("touchstart", releaseClickLock);
+      window.removeEventListener("keydown", releaseClickLock);
+      window.clearTimeout(clickReleaseTimerRef.current);
     };
   }, []);
 
@@ -109,7 +168,8 @@ export default function Navigation() {
       const itemRect = activeItem.getBoundingClientRect();
 
       setHighlightStyle({
-        left: itemRect.left - navRect.left,
+        // 하이라이트는 ul의 테두리 안쪽 기준으로 놓이므로 테두리 두께(clientLeft)를 빼준다
+        left: itemRect.left - navRect.left - navList.clientLeft,
         width: itemRect.width,
         opacity: 1,
       });
@@ -162,25 +222,25 @@ export default function Navigation() {
 
     event.preventDefault();
 
-    const headerOffset = 96;
-    const targetTop =
-      target.getBoundingClientRect().top + window.scrollY - headerOffset;
-
+    clickedSectionRef.current = id;
+    armClickRelease(clickedSectionRef, clickReleaseTimerRef);
+    setActiveSection(id);
     window.history.replaceState(null, "", href);
-    window.scrollTo({
-      top: targetTop,
-      behavior: "smooth",
-    });
+    // 헤더 아래 여백은 globals.css의 scroll-padding-top 하나로 맞춘다 (직접 링크로 들어올 때와 같은 위치)
+    target.scrollIntoView({ behavior: getScrollBehavior(), block: "start" });
   };
 
   const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     setIsMenuOpen(false);
+    // 맨 위로 올라가는 동안 하이라이트가 섹션들을 훑지 않게 잠근다
+    clickedSectionRef.current = "top";
+    armClickRelease(clickedSectionRef, clickReleaseTimerRef);
     setActiveSection(null);
     window.history.replaceState(null, "", "/");
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: getScrollBehavior(),
     });
   };
 
@@ -193,11 +253,8 @@ export default function Navigation() {
           : "border-border-subtle bg-[radial-gradient(circle_at_top_left,rgba(125,211,252,0.08),transparent_26%),radial-gradient(circle_at_top_right,rgba(192,132,252,0.08),transparent_28%),rgba(2,8,23,0.78)] backdrop-blur"
       }`}
     >
-      <nav
-        className={`mx-auto flex max-w-5xl items-center justify-between px-6 transition-[padding] duration-500 ${
-          isScrolled ? "py-3" : "py-4"
-        }`}
-      >
+      {/* 헤더 높이를 스크롤에 따라 바꾸면 문서가 밀리면서 임계값을 다시 넘나들어 떨린다. 높이는 고정하고 배경만 바꾼다 */}
+      <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link
           className="group my-1 inline-flex items-center gap-3 text-lg font-bold text-text-primary transition-transform duration-300 hover:-translate-y-0.5"
           href="/"

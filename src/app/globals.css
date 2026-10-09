@@ -11,6 +11,14 @@
 
 html {
   scroll-behavior: smooth;
+  /* sticky 헤더 아래 여백. 메뉴 클릭, #링크 진입, 키보드 포커스 이동 모두 이 값을 따른다 */
+  scroll-padding-top: 6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {

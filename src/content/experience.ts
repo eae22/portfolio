@@ -1,6 +1,7 @@
 // Experience 데이터 (실제 이력 기준, docs/portfolio-experience.ts 2026.10 정정본에서 옮김)
 // - 기간 표기: "YYYY.MM". 진행 중이면 end: "Present"
-// - github / link 가 없으면 필드를 빼두고, 화면에서 버튼을 렌더링하지 않는다
+// - github / blog / link 가 없으면 필드를 빼두고, 화면에서 버튼을 렌더링하지 않는다
+//   (blog는 이 경험을 정리한 블로그 글, link는 배포 주소·논문처럼 그 밖의 공개 링크)
 // - subtitle: 제목 아래 작은 줄 (팀, 수업, 주최 등 괄호에 들어가던 내용)
 // - summary: 카드 한줄 소개. "\n"을 넣은 곳에서 줄이 바뀐다. 수상 내용은 배지로 보이므로 넣지 않는다
 // - TODO 주석이 붙은 값은 본인이 채우거나 확인해야 함 (확인 전에는 사이트에 노출하지 말 것)
@@ -31,6 +32,12 @@ export interface ExperienceProblem {
   desc: string;
 }
 
+// 대회 순위. 화면에는 "상위 5.3%"처럼 비율로 보인다
+export interface ExperienceRanking {
+  place: number;
+  total: number;
+}
+
 export interface ExperienceItem {
   id: string;
   title: string;
@@ -38,9 +45,11 @@ export interface ExperienceItem {
   category: ExperienceCategory;
   tracks?: ExperienceTrack[];
   period: ExperiencePeriod;
+  ranking?: ExperienceRanking;
   summary: string;
   github?: string;
   link?: string;
+  blog?: string;
   overview: string;
   features: ExperienceFeature[];
   stack: string[];
@@ -312,37 +321,49 @@ export const experiences: ExperienceItem[] = [
   },
   {
     id: "ai-agent-contest",
-    title: "AI Agent 행동 의사결정 예측 경진대회",
-    subtitle: "주최 정보통신기획평가원",
+    title: "AI Agent 행동 의사결정 예측 챌린지",
+    subtitle: "정보통신기획평가원 주최 · 데이콘 주관 · 4인 팀",
     category: "Project",
     tracks: ["AI"],
     period: { start: "2026.07", end: "2026.07" },
-    summary: "14개 클래스 행동 예측 코드 제출형 대회",
+    ranking: { place: 22, total: 269 },
+    summary: "에이전트 행동 14종 예측 모델\nF1 0.736→0.779, 추론 4.1배 가속",
+    blog: "https://velog.io/@eae22/ai-agent-action-prediction-contest",
     overview:
-      "AI·SW중심대학 학생 대상으로 AI 에이전트의 다음 행동을 14개 클래스 중에서 예측하는 코드 제출형 경진대회입니다. 오프라인, T4 GPU, 추론 10분 제약이 있었습니다.",
+      "AI 코딩 에이전트의 세션 기록을 보고 다음 행동을 14개 중 하나로 예측하는 데이콘 코드 제출형 대회로, 인터넷이 막힌 T4 GPU에서 10분 안에 3만 건을 예측해야 했습니다. XLM-RoBERTa 인코더 모델과 추론 최적화를 맡아 6개 모델 앙상블로 최종 제출본을 완성했습니다.",
     features: [
       {
-        title: "인코더 기반 분류 모델",
-        desc: "텍스트로 직렬화한 입력을 인코더 모델로 분류합니다.",
+        title: "세션 기록 기반 행동 분류",
+        desc: "현재 요청·직전 행동 결과·최근 행동 12개를 입력 앞쪽에 배치해 텍스트가 잘려도 핵심 신호가 남게 하고, XLM-RoBERTa로 14개 행동을 분류합니다.",
       },
       {
-        title: "자체 검증 체계",
-        desc: "리더보드와 별개로 OOF 검증으로 실제 성능을 확인합니다.",
+        title: "6개 모델 앙상블과 오프라인 추론",
+        desc: "팀원 모델과 함께 6개 모델의 출력을 가중 합산하고, fp16 로딩과 배치 최적화로 T4에서 10분 안에 추론합니다.",
       },
     ],
-    stack: ["Python"], // TODO: 실제로 쓴 프레임워크 추가 (PyTorch, Transformers 등)
-    roles: ["인코더 기반 모델링", "앙상블 검증과 최종 제출 패키징"],
+    stack: [
+      "Python",
+      "PyTorch",
+      "Transformers",
+      "scikit-learn",
+      "Pandas",
+      "NumPy",
+    ],
+    roles: [
+      "소수 도메인 토큰·3배 오버샘플링 학습 레시피 설계 (단일 모델 0.736 → 0.779)",
+      "T4 추론 최적화 (fp16 로딩 수정으로 530초 → 128초)",
+      "세션 단위 검증 분할 설계 (부풀려진 +0.048 개선을 제출 전 차단)",
+    ],
     problems: [
       {
-        title: "서로 헷갈리는 클래스",
-        desc: "혼동행렬로 자주 섞이는 클래스 묶음을 찾고, 입력 텍스트 구성을 다시 설계해 단일 모델 최고 기록을 갱신했습니다.",
+        title: "검증보다 계속 낮게 나온 리더보드 점수",
+        desc: "도메인별로 다시 재 보니 학습 데이터의 7%인 소수 도메인에서만 Macro-F1 0.68로 약했습니다. 도메인 표시 토큰과 3배 오버샘플링으로 소수 도메인 점수를 0.91까지 올려 당시 팀 최고 기록을 냈습니다.",
       },
       {
-        title: "부풀려 보이던 검증 점수",
-        desc: "별도 OOF 검증 체계를 만들어 성능이 실제보다 높게 보이던 리크 사례 여러 건을 찾아 수정했습니다.",
+        title: "T4에서만 느려지는 추론",
+        desc: "fp16으로 저장한 모델을 dtype 지정 없이 불러와 T4에서 fp32로 돌고 있었고, 개발 서버의 A6000에서는 차이가 드러나지 않았습니다. float16 로딩과 배치 512를 적용해 실행 시간을 530초에서 128초로 4.1배 줄였습니다.",
       },
     ],
-    // TODO: 최종 순위 확인 후 summary에 추가 (기록마다 "예선 21위"와 "269팀 중 22위"가 섞여 있음)
   },
   {
     id: "marc-2026",
@@ -523,51 +544,92 @@ export const experiences: ExperienceItem[] = [
   {
     id: "lg-aimers",
     title: "LG Aimers 9기",
+    subtitle: "LG AI연구원 주최 · 데이콘 주관 온라인 해커톤 · 4인 팀",
     category: "Study",
-    tracks: ["AI"],
+    tracks: ["AI", "Data"],
     period: { start: "2026.06", end: "2026.09" },
-    summary: "AI 교육 수료\n온라인 해커톤 1,090팀 중 58위",
-    overview: "LG AI연구원이 운영하는 청년 AI 교육 프로그램입니다.",
+    ranking: { place: 58, total: 1090 },
+    summary:
+      "투구 147만 건으로 제구 성공 확률 예측\n온라인 해커톤 1,090팀 중 58위",
+    overview:
+      "LG AI연구원의 청년 AI 교육 과정을 수료하고, 야구 투구 데이터로 투구마다 제구 성공 확률을 예측하는 온라인 해커톤에 참가했습니다. 데이터 전처리와 모델 결합을 맡아 팀 최고점을 11번 갱신했습니다.",
     features: [
       {
-        title: "AI 이론과 실습",
-        desc: "11주간 AI와 머신러닝 교육을 이수했습니다.",
+        title: "투구별 제구 성공 확률 예측",
+        desc: "볼카운트·주자·선수 기록 등 47개 컬럼으로 투구마다 제구 성공 확률을 예측하고, 인터넷이 막힌 채점 서버에서 10분 안에 추론합니다.",
       },
       {
-        title: "온라인 해커톤",
-        desc: "야구 투구 데이터로 제구 성공 확률을 예측하는 모델을 만들어 1,090팀 중 58위를 기록했습니다.",
+        title: "트리 모델과 신경망 앙상블",
+        desc: "팀원의 트리 모델(CatBoost·LightGBM)에 신경망 12개와 상황별 보정층을 더해 예측을 보완합니다.",
       },
     ],
-    stack: ["Python"],
-    roles: ["모델 개발과 코드 제출"],
-    problems: [],
+    stack: [
+      "Python",
+      "PyTorch",
+      "CatBoost",
+      "scikit-learn",
+      "Pandas",
+      "NumPy",
+      "LightGBM",
+      "Git",
+    ],
+    roles: [
+      "누적 비율 차분으로 데이터에 없는 구종·투구 결과 복원 (147만 투구, 일치율 100%)",
+      "시즌 흐름 피처 23개 설계 등 단독 모델 개선 (928 → 1,056점)",
+      "신경망 결합·상황별 보정층 설계 (팀 최고점 1,122 → 1,162점)",
+    ],
+    problems: [
+      {
+        title: "데이터에 없는 구종 정보",
+        desc: "구종 컬럼이 없었고, 외부 투구 추적 데이터는 선수 ID가 맞지 않아 일부 투수만 연결됐습니다. 누적 구종 비율을 정수 횟수로 바꿔 차분하는 방식으로 투수 792명 중 791명의 구종을 복원했습니다.",
+      },
+      {
+        title: "행 독립성 규정에 따른 실격 위험",
+        desc: "대회 중 '평가 데이터를 행마다 독립적으로 예측해야 한다'는 원칙이 다시 공지되며 상위권 다수의 점수가 삭제됐습니다. 다른 행을 모두 바꿔도 예측이 같은지 재는 검사 도구로 모든 제출본을 검증해 실격 없이 마쳤습니다.",
+      },
+    ],
   },
   {
     id: "comento-data-engineer",
-    title: "코멘토 데이터 엔지니어 직무 부트캠프",
+    title: "코멘토 데이터 엔지니어 부트캠프",
+    subtitle: "코멘토 직무 부트캠프 · 5주 과정 · 개인 과제",
     category: "Study",
     tracks: ["Data"],
     period: { start: "2026.07", end: "2026.08" },
-    summary: "DB 설계, 성능 개선, 이관 파이프라인 실무 과제",
+    summary: "DB 설계·보안·성능 개선·이관 파이프라인 5주 실무 과제",
     overview:
-      "현직 데이터 엔지니어 멘토링 기반 5주 과정에 DB팀으로 참여했습니다.",
+      "가상 회사의 AWS 클라우드 전환 시나리오에서 데이터베이스팀 인턴 역할로 주차별 업무 요청을 수행한 5주 직무 부트캠프입니다. DBMS 선정부터 ERD 설계, 보안 점검, 성능 개선, 이관 파이프라인까지 데이터 엔지니어 업무를 한 사이클로 경험했습니다.",
     features: [
       {
-        title: "DB 설계",
-        desc: "리버스 ERD, 상품 추천 DB 논리 ERD, NoSQL용 ERD를 설계했습니다.",
+        title: "DBMS 선정과 구축",
+        desc: "4개 후보를 비용·운영성·확장성으로 비교해 AWS RDS MySQL을 권고하고, 로컬 MySQL과 RDS에 구축했습니다.",
       },
       {
-        title: "운영 과제",
-        desc: "SQL 추출과 조작, 인덱스 성능 개선, 프로시저, 장애 처리와 백업, 복원을 실습했습니다.",
+        title: "DB 설계와 보안 점검",
+        desc: "리버스 ERD와 9개 엔터티 논리 ERD를 설계하고, ISMS-P 요건에 맞춰 계정 권한 분리와 비밀번호·세션 정책을 적용했습니다.",
       },
       {
-        title: "데이터 품질",
-        desc: "이상 데이터 검출 로직과 데이터 라이프사이클, 변환과 이관 파이프라인을 만들었습니다.",
+        title: "분석과 이관 파이프라인",
+        desc: "인구통계 데이터를 SQL과 Pandas로 분석하고, Airflow로 엑셀 데이터를 MySQL로 옮기는 이관 파이프라인을 실습했습니다.",
       },
     ],
-    stack: ["MySQL", "AWS RDS", "Pandas"], // Airflow는 사용하지 않음 (본인 확인)
-    roles: ["DB 구축과 성능 개선, 이관 파이프라인 과제 수행"],
-    problems: [],
+    // Airflow는 부트캠프에서 짧게 실습만 해서 기술 스택 칩에는 넣지 않는다 (본인 확인)
+    stack: ["MySQL", "AWS RDS", "Pandas", "Neo4j", "DBeaver"],
+    roles: [
+      "DBMS 4종 비교 보고서 작성과 MySQL·AWS RDS 구축",
+      "ERD 3종 설계와 ISMS-P 기반 보안 설정",
+      "인덱스 튜닝(조회 약 7배 단축)과 이관 파이프라인 구축",
+    ],
+    problems: [
+      {
+        title: "Table scan으로 동작하던 조회 쿼리",
+        desc: "EXPLAIN ANALYZE로 조회 쿼리가 Table scan으로 동작하는 것을 찾았습니다. 인덱스를 적용해 Covering index lookup으로 바꾸고 실행 시간을 약 7배 줄였습니다.",
+      },
+      {
+        title: "AWS RDS 연결 시 Public Key Retrieval 오류",
+        desc: "DBeaver로 RDS에 연결할 때 MySQL 8.0 인증 방식 때문에 서버 공개키를 가져오지 못했습니다. 드라이버 속성에 allowPublicKeyRetrieval=true를 설정해 연결했습니다.",
+      },
+    ],
   },
 ];
 
@@ -601,6 +663,16 @@ export function compareExperienceByLatest(
 
 export function formatExperiencePeriod({ start, end }: ExperiencePeriod) {
   return start === end ? start : `${start} - ${end}`;
+}
+
+// 58 / 1090 → "상위 5.3%" (소수 첫째 자리 반올림)
+export function formatExperienceRanking({ place, total }: ExperienceRanking) {
+  return `상위 ${Math.round((place / total) * 1000) / 10}%`;
+}
+
+// 마우스를 올리면 보이는 원래 순위 → "1,090팀 중 58위"
+export function describeExperienceRanking({ place, total }: ExperienceRanking) {
+  return `${total.toLocaleString("ko-KR")}팀 중 ${place}위`;
 }
 
 export function getExperienceYear({ period }: ExperienceItem) {

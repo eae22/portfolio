@@ -3,8 +3,10 @@
 import {
   ArrowLeft,
   ArrowUpRight,
+  ChartNoAxesColumnIncreasing,
   GitBranch,
   Link2,
+  NotebookPen,
   Trophy,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -12,8 +14,10 @@ import { createPortal } from "react-dom";
 import SkillPill from "@/components/SkillPill";
 import { getAwardByProject } from "@/content/achievements";
 import {
+  describeExperienceRanking,
   type ExperienceItem,
   formatExperiencePeriod,
+  formatExperienceRanking,
 } from "@/content/experience";
 import { getTechBadge } from "@/content/skills";
 import styles from "./ExperienceDetailModal.module.css";
@@ -95,8 +99,6 @@ export default function ExperienceDetailModal({
   ).filter((key) => sectionVisibility[key]);
   const getSectionNumber = (key: DetailSectionKey) =>
     visibleSections.indexOf(key) + 1;
-  const hasBothDetailColumns =
-    sectionVisibility.roles && sectionVisibility.problems;
 
   const handleRequestClose = useCallback(() => {
     if (isClosingRef.current) return;
@@ -187,7 +189,7 @@ export default function ExperienceDetailModal({
             </div>
           </div>
 
-          {item.link || item.github ? (
+          {item.link || item.blog || item.github ? (
             <div className={styles.headerLinks}>
               {item.link ? (
                 <a
@@ -199,6 +201,27 @@ export default function ExperienceDetailModal({
                 >
                   <Link2 className={styles.headerLinkIcon} aria-hidden="true" />
                   Link
+                  <ArrowUpRight
+                    className={styles.headerLinkArrow}
+                    aria-hidden="true"
+                  />
+                </a>
+              ) : null}
+
+              {/* 블로그 글은 Profile의 Blog 버튼과 같은 이름·아이콘으로 보여준다 */}
+              {item.blog ? (
+                <a
+                  href={item.blog}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.headerLink}
+                  aria-label={`Blog - ${item.title} (새 탭)`}
+                >
+                  <NotebookPen
+                    className={styles.headerLinkIcon}
+                    aria-hidden="true"
+                  />
+                  Blog
                   <ArrowUpRight
                     className={styles.headerLinkArrow}
                     aria-hidden="true"
@@ -248,6 +271,18 @@ export default function ExperienceDetailModal({
                 <span className={styles.metaAward}>
                   <Trophy className={styles.metaAwardIcon} aria-hidden="true" />
                   {award.name}
+                </span>
+              ) : null}
+              {item.ranking ? (
+                <span
+                  className={styles.metaRanking}
+                  data-tooltip={describeExperienceRanking(item.ranking)}
+                >
+                  <ChartNoAxesColumnIncreasing
+                    className={styles.metaAwardIcon}
+                    aria-hidden="true"
+                  />
+                  {formatExperienceRanking(item.ranking)}
                 </span>
               ) : null}
             </div>
@@ -304,51 +339,40 @@ export default function ExperienceDetailModal({
               </section>
             ) : null}
 
-            {sectionVisibility.roles || sectionVisibility.problems ? (
-              <div
-                className={styles.detailColumns}
-                data-columns={hasBothDetailColumns ? 2 : 1}
-              >
-                {sectionVisibility.roles ? (
-                  <section className={styles.section}>
-                    <DetailSectionTitle
-                      number={getSectionNumber("roles")}
-                      title="맡은 역할"
-                    />
-                    <ul className={styles.roleList}>
-                      {item.roles.map((roleItem) => (
-                        <li key={roleItem} className={styles.roleItem}>
-                          {roleItem}
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                ) : null}
+            {/* 맡은 역할과 문제 해결은 글이 길어서 좌우로 나누지 않고 위아래로 쌓는다 */}
+            {sectionVisibility.roles ? (
+              <section className={styles.section}>
+                <DetailSectionTitle
+                  number={getSectionNumber("roles")}
+                  title="맡은 역할"
+                />
+                <ul className={styles.roleList}>
+                  {item.roles.map((roleItem) => (
+                    <li key={roleItem} className={styles.roleItem}>
+                      {roleItem}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
 
-                {sectionVisibility.problems ? (
-                  <section className={styles.section}>
-                    <DetailSectionTitle
-                      number={getSectionNumber("problems")}
-                      title="문제 해결"
-                    />
-                    <div className={styles.problemList}>
-                      {item.problems.map((problem) => (
-                        <article
-                          key={problem.title}
-                          className={styles.problemCard}
-                        >
-                          <h4 className={styles.problemTitle}>
-                            {problem.title}
-                          </h4>
-                          <p className={styles.problemDescription}>
-                            {problem.desc}
-                          </p>
-                        </article>
-                      ))}
-                    </div>
-                  </section>
-                ) : null}
-              </div>
+            {sectionVisibility.problems ? (
+              <section className={styles.section}>
+                <DetailSectionTitle
+                  number={getSectionNumber("problems")}
+                  title="문제 해결"
+                />
+                <div className={styles.problemList}>
+                  {item.problems.map((problem) => (
+                    <article key={problem.title} className={styles.problemCard}>
+                      <h4 className={styles.problemTitle}>{problem.title}</h4>
+                      <p className={styles.problemDescription}>
+                        {problem.desc}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              </section>
             ) : null}
           </div>
         </div>

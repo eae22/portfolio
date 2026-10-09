@@ -23,6 +23,12 @@ export type SkillAccent =
   | "mediapipe"
   | "yolo"
   | "pandas"
+  | "numpy"
+  | "scikitlearn"
+  | "pytorch"
+  | "huggingface"
+  | "neo4j"
+  | "dbeaver"
   | "hadoop"
   | "spark"
   | "qwen"
@@ -201,7 +207,7 @@ export const skills: SkillItem[] = [
 ];
 
 // Experience 기술 스택 이름 → 아이콘(Simple Icons slug 또는 /public 경로)과 브랜드 색
-// 목록에 없는 이름은 아이콘 없이 기본 색 pill로 보인다 (예: llama.cpp, K-Means)
+// 목록에 없는 이름은 아이콘 없이 기본 색 pill로 보인다 (예: llama.cpp, K-Means, CatBoost, LightGBM)
 const techBadges: Record<string, Omit<TechBadge, "name">> = {
   JavaScript: { icon: "javascript", accent: "javascript" },
   TypeScript: { icon: "typescript", accent: "typescript" },
@@ -214,15 +220,23 @@ const techBadges: Record<string, Omit<TechBadge, "name">> = {
   "Node.js": { icon: "nodedotjs", accent: "nodejs" },
   Express: { icon: "express", accent: "express" },
   MySQL: { icon: "mysql", accent: "mysql" },
+  Neo4j: { icon: "neo4j", accent: "neo4j" },
+  DBeaver: { icon: "dbeaver", accent: "dbeaver" },
   // Simple Icons에 AWS 아이콘이 없어 범용 데이터베이스 아이콘을 쓴다
   "AWS RDS": { icon: "/icons/database.svg", accent: "awsrds" },
   Docker: { icon: "docker", accent: "docker" },
+  Git: { icon: "git", accent: "git" },
   "GitHub Actions": { icon: "githubactions", accent: "githubactions" },
   "Cloudflare Workers": { icon: "cloudflareworkers", accent: "cloudflare" },
   OpenCV: { icon: "opencv", accent: "opencv" },
   MediaPipe: { icon: "mediapipe", accent: "mediapipe" },
   YOLO: { icon: "yolo", accent: "yolo" },
   Pandas: { icon: "pandas", accent: "pandas" },
+  NumPy: { icon: "numpy", accent: "numpy" },
+  "scikit-learn": { icon: "scikitlearn", accent: "scikitlearn" },
+  PyTorch: { icon: "pytorch", accent: "pytorch" },
+  // Hugging Face Transformers 라이브러리
+  Transformers: { icon: "huggingface", accent: "huggingface" },
   Hadoop: { icon: "apachehadoop", accent: "hadoop" },
   Spark: { icon: "apachespark", accent: "spark" },
   "Qwen2.5-3B-Instruct": { icon: "qwen", accent: "qwen" },

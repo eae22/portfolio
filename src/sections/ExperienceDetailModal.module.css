@@ -469,3 +469,13 @@
     margin-left: auto;
   }
 }
+
+/* 움직임 줄이기 설정이면 흐려지거나 커지는 효과 없이 바로 열고 닫는다 (닫힘 대기 시간도 tsx에서 0으로 맞춘다) */
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .backdrop[data-closing="true"],
+  .dialog,
+  .dialog[data-closing="true"] {
+    animation: none;
+  }
+}

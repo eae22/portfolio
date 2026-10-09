@@ -98,8 +98,6 @@ export default function ExperienceDetailModal({
   ).filter((key) => sectionVisibility[key]);
   const getSectionNumber = (key: DetailSectionKey) =>
     visibleSections.indexOf(key) + 1;
-  const hasBothDetailColumns =
-    sectionVisibility.roles && sectionVisibility.problems;
 
   const handleRequestClose = useCallback(() => {
     if (isClosingRef.current) return;
@@ -319,51 +317,40 @@ export default function ExperienceDetailModal({
               </section>
             ) : null}
 
-            {sectionVisibility.roles || sectionVisibility.problems ? (
-              <div
-                className={styles.detailColumns}
-                data-columns={hasBothDetailColumns ? 2 : 1}
-              >
-                {sectionVisibility.roles ? (
-                  <section className={styles.section}>
-                    <DetailSectionTitle
-                      number={getSectionNumber("roles")}
-                      title="맡은 역할"
-                    />
-                    <ul className={styles.roleList}>
-                      {item.roles.map((roleItem) => (
-                        <li key={roleItem} className={styles.roleItem}>
-                          {roleItem}
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                ) : null}
+            {/* 맡은 역할과 문제 해결은 글이 길어서 좌우로 나누지 않고 위아래로 쌓는다 */}
+            {sectionVisibility.roles ? (
+              <section className={styles.section}>
+                <DetailSectionTitle
+                  number={getSectionNumber("roles")}
+                  title="맡은 역할"
+                />
+                <ul className={styles.roleList}>
+                  {item.roles.map((roleItem) => (
+                    <li key={roleItem} className={styles.roleItem}>
+                      {roleItem}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
 
-                {sectionVisibility.problems ? (
-                  <section className={styles.section}>
-                    <DetailSectionTitle
-                      number={getSectionNumber("problems")}
-                      title="문제 해결"
-                    />
-                    <div className={styles.problemList}>
-                      {item.problems.map((problem) => (
-                        <article
-                          key={problem.title}
-                          className={styles.problemCard}
-                        >
-                          <h4 className={styles.problemTitle}>
-                            {problem.title}
-                          </h4>
-                          <p className={styles.problemDescription}>
-                            {problem.desc}
-                          </p>
-                        </article>
-                      ))}
-                    </div>
-                  </section>
-                ) : null}
-              </div>
+            {sectionVisibility.problems ? (
+              <section className={styles.section}>
+                <DetailSectionTitle
+                  number={getSectionNumber("problems")}
+                  title="문제 해결"
+                />
+                <div className={styles.problemList}>
+                  {item.problems.map((problem) => (
+                    <article key={problem.title} className={styles.problemCard}>
+                      <h4 className={styles.problemTitle}>{problem.title}</h4>
+                      <p className={styles.problemDescription}>
+                        {problem.desc}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              </section>
             ) : null}
           </div>
         </div>

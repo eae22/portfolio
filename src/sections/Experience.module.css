@@ -168,7 +168,15 @@
   margin-left: 0;
 }
 
-/* 키보드로 카드에 초점이 오면 순위 말풍선("1,090팀 중 58위")도 함께 보여준다 */
+/* 카드에 마우스를 올리거나 키보드로 초점이 오면 순위 말풍선("1,090팀 중 58위")을 바로 보여준다.
+   터치 기기에서는 hover가 눌린 채로 남을 수 있어서 마우스가 있을 때만 hover로 띄운다 */
+@media (hover: hover) {
+  .card:hover .ranking::after {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
 .card:focus-visible .ranking::after {
   opacity: 1;
   transform: translate(0, -50%);

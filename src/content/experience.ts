@@ -94,7 +94,7 @@ export const experiences: ExperienceItem[] = [
         desc: "분실물 목록과 상세 조회, 관리자 페이지, CCTV 확인 화면을 제공합니다.",
       },
     ],
-    stack: ["React", "YOLO", "Python"], // TODO: JavaScript인지 TypeScript인지 확인
+    stack: ["React", "YOLO", "Python", "Figma"], // TODO: JavaScript인지 TypeScript인지 확인
     roles: [
       "React 프론트엔드 전반 구현 (분실물 목록과 상세, 관리자 페이지, CCTV 확인 화면)",
       "YOLO 학습 데이터를 여러 구도로 직접 촬영하고 라벨링",
@@ -178,7 +178,7 @@ export const experiences: ExperienceItem[] = [
         desc: "면접 진행 화면에서 질문을 음성으로 읽어줍니다 (Cloudflare Workers TTS).",
       },
     ],
-    stack: ["React", "Cloudflare Workers"], // TODO: 빌드 도구(CRA인지 Vite인지)와 JS/TS 확인
+    stack: ["React", "Cloudflare Workers", "Figma"], // TODO: 빌드 도구(CRA인지 Vite인지)와 JS/TS 확인
     roles: [
       "React 프로젝트 초기 세팅",
       "메인, 로그인, 회원가입 화면 구현",
@@ -264,7 +264,7 @@ export const experiences: ExperienceItem[] = [
         desc: "고령 사용자를 위해 화면을 더 크고 단순하게 보여줍니다.",
       },
     ],
-    stack: ["React", "Vite", "TypeScript"],
+    stack: ["React", "Vite", "TypeScript", "Figma"],
     roles: [
       "프론트엔드 전체 구현 (온보딩, 검색과 조합 분석, 결과 화면)",
       "결과 리포트 PDF와 이미지 내보내기, 시니어 모드 UX",

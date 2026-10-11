@@ -40,6 +40,20 @@
   gap: 0.6rem;
 }
 
+/* Languages: 2칸을 다 쓰는 얇은 한 줄. 제목은 왼쪽, 칩은 오른쪽에 나란히 둔다 */
+.groupWide {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  grid-column: 1 / -1;
+  padding-block: 1rem;
+}
+
+.groupWide .groupHeader {
+  margin-bottom: 0;
+}
+
 @media (width <= 768px) {
   .groups {
     grid-template-columns: minmax(0, 1fr);

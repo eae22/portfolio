@@ -31,7 +31,7 @@ export default function Profile() {
                 Eunjae Jang
               </h3>
               <p className="mt-4 max-w-lg text-base leading-8 text-text-secondary md:text-lg">
-                차분하고 구조적인 화면을 설계하는 프론트엔드 개발자입니다.
+                프론트엔드에서 데이터와 AI로 영역을 넓힌 엔지니어입니다.
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-2.5">

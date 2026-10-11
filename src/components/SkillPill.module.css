@@ -53,8 +53,9 @@
   user-select: none;
   overflow: hidden;
   transform-origin: center bottom;
+  /* 탄성(bounce) 없이 부드럽게 멈춘다. 많이 띄우면 칩이 붕붕 떠 보여서 살짝만 움직인다 */
   transition:
-    transform var(--duration-normal) var(--ease-bounce),
+    transform var(--duration-normal) var(--ease-out),
     border-color var(--duration-normal) var(--ease-out),
     box-shadow var(--duration-normal) var(--ease-out),
     background var(--duration-normal) var(--ease-out);
@@ -83,7 +84,7 @@
 
 .pill:hover {
   z-index: 2;
-  transform: translate3d(0, -12px, 0) scale(1.08);
+  transform: translate3d(0, -4px, 0) scale(1.03);
   border-color: color-mix(
     in srgb,
     var(--color-border-inverse-subtle) 30%,
@@ -96,7 +97,7 @@
   );
   box-shadow:
     var(--skill-pill-hover-shadow),
-    0 26px 56px color-mix(in srgb, var(--skill-border-accent) 26%, transparent);
+    0 14px 28px color-mix(in srgb, var(--skill-border-accent) 16%, transparent);
 }
 
 .pill:hover::after {
@@ -116,23 +117,15 @@
   display: flex;
   align-items: center;
   gap: 0.375rem;
-  transition: transform var(--duration-normal) var(--ease-bounce);
+  transition: transform var(--duration-normal) var(--ease-out);
 }
 
 .small .icons {
   gap: 0.25rem;
 }
 
-.label {
-  transition: transform var(--duration-normal) var(--ease-bounce);
-}
-
 .pill:hover .icons {
-  transform: translateY(-2px) scale(1.08);
-}
-
-.pill:hover .label {
-  transform: translateY(-2px) translateX(1px);
+  transform: scale(1.06);
 }
 
 .icon {

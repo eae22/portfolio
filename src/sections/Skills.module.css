@@ -2,7 +2,7 @@
   --skills-accent: #93c5fd;
   --skill-chip-shadow: 0 10px 24px rgb(15 23 42 / 0.08);
   --skill-chip-hover-shadow: 0 18px 32px rgb(15 23 42 / 0.14);
-  --skill-chip-enter-distance: 14px;
+  --skill-chip-enter-distance: 8px;
 }
 
 .groups {

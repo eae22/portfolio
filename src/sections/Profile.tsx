@@ -73,7 +73,7 @@ export default function Profile() {
               {[
                 { label: "Based in", value: "Seoul, South Korea" },
                 { label: "Studying at", value: "Dongguk University, Senior" },
-                { label: "Email", value: "eun0110@dgu.ac.kr" },
+                { label: "Email", value: profileLinks.email },
               ].map((item) => (
                 <div
                   key={item.label}

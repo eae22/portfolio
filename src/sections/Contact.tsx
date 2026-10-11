@@ -50,7 +50,7 @@ export default function Contact() {
             Let&apos;s connect
           </p>
           <p className="mb-8 max-w-xl text-sm leading-7 text-text-secondary md:text-base">
-            프로젝트, 협업, 프론트엔드 개발 이야기를 편하게 남겨주세요.
+            채용, 협업, 데이터와 AI 관련 연락을 기다립니다.
           </p>
           <div className="mb-4 flex flex-col items-center gap-2 rounded-2xl border-2 border-border-subtle bg-surface-card px-5 py-4 shadow-[0_18px_50px_rgba(5,10,30,0.18)] md:px-6">
             <span className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-text-tertiary">

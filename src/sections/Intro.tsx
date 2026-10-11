@@ -4,13 +4,13 @@ import SectionLayout from "@/components/SectionLayout";
 
 export default function Intro() {
   return (
+    // 헤더(약 5rem)를 뺀 첫 화면 높이 안에서 상자를 세로 가운데에 둔다 (위에 붙어 아래가 비어 보이지 않게)
     <SectionLayout
       id="intro"
-      fullHeight
-      className="flex cursor-default items-start justify-center pt-14 md:pt-16 md:pb-12 select-none"
+      className="flex min-h-[calc(100svh-5rem)] cursor-default items-center justify-center pt-10 pb-12 select-none md:pt-12 md:pb-16"
     >
       <div className="w-full max-w-312">
-        <div className="relative mx-auto overflow-hidden rounded-[2.25rem] border border-white/8 bg-[radial-gradient(circle_at_top_left,rgba(125,211,252,0.1),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(192,132,252,0.08),transparent_32%),linear-gradient(180deg,rgba(15,23,42,0.92),rgba(2,8,23,0.96))] px-7 py-9 shadow-[0_28px_72px_rgba(2,8,23,0.26)] md:px-10 md:py-10 lg:max-w-272">
+        <div className="relative mx-auto overflow-hidden rounded-[2.25rem] border border-white/8 bg-[radial-gradient(circle_at_top_left,rgba(125,211,252,0.1),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(192,132,252,0.08),transparent_32%),linear-gradient(180deg,rgba(15,23,42,0.92),rgba(2,8,23,0.96))] px-5 py-8 shadow-[0_28px_72px_rgba(2,8,23,0.26)] sm:px-7 sm:py-9 md:px-10 md:py-10 lg:max-w-272">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute top-10 right-10 h-32 w-32 rounded-full bg-sky-200/8 blur-3xl"
@@ -20,16 +20,19 @@ export default function Intro() {
             className="pointer-events-none absolute bottom-0 left-12 h-24 w-24 rounded-full bg-fuchsia-200/8 blur-3xl"
           />
 
-          <div className="mx-auto max-w-[41rem] text-center lg:max-w-164">
+          {/* 큰 화면에서는 헤드라인이 '활용하고,' 뒤에서만 끊겨 두 줄이 되도록 글자 칸을 48rem까지 넓힌다 */}
+          <div className="mx-auto max-w-[41rem] text-center lg:max-w-3xl">
             <ScrollReveal delay={80}>
               <div className="space-y-5">
                 <p className="text-sm font-medium tracking-[0.16em] text-text-tertiary uppercase">
-                  Frontend Developer
+                  Data &amp; AI Engineer
                 </p>
-                <h1 className="mx-auto max-w-3xl text-[2.4rem] font-black leading-[1.02] tracking-[-0.05em] text-text-primary md:text-[2.8rem]">
-                  사용자 관점으로 문제를 해결하는
+                {/* 휴대폰에서는 '모으고,' 뒤에서도 끊어 '데이터를 모으고, / AI로 활용하고, / 화면까지 직접 만드는 / 엔지니어입니다.' 4줄로 맞춘다 */}
+                <h1 className="mx-auto max-w-3xl text-[1.75rem] font-black leading-[1.15] tracking-[-0.05em] text-text-primary sm:text-[2rem] md:text-[2.4rem] md:leading-[1.06] lg:text-[2.8rem]">
+                  데이터를 모으고,
+                  <br className="sm:hidden" /> AI로 활용하고,
                   <br />
-                  개발자입니다.
+                  화면까지 직접 만드는 엔지니어입니다.
                 </h1>
               </div>
             </ScrollReveal>
@@ -47,7 +50,7 @@ export default function Intro() {
                   |
                 </span>
                 <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
-                  {["정보 구조", "사용자 흐름", "문제 해결"].map((keyword) => (
+                  {["데이터 수집", "AI 모델링", "화면 구현"].map((keyword) => (
                     <span
                       key={keyword}
                       className="inline-flex items-center gap-2 text-sm font-medium text-text-secondary"
@@ -62,8 +65,8 @@ export default function Intro() {
 
             <ScrollReveal delay={260}>
               <div className="mx-auto mt-7 max-w-2xl space-y-2 text-base leading-8 text-text-secondary md:text-lg">
-                <p>사용자의 입장에서 서비스를 고민하며</p>
-                <p>실질적인 문제를 해결하는 개발자가 되고자 합니다.</p>
+                <p>데이터는 자동으로 모이도록 만들고,</p>
+                <p>모델은 검증 기준을 세워 개선합니다.</p>
               </div>
             </ScrollReveal>
 

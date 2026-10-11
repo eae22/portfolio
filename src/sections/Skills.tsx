@@ -1,4 +1,11 @@
-import { Braces, type LucideIcon, Monitor, Server, Wrench } from "lucide-react";
+import {
+  Braces,
+  BrainCircuit,
+  Database,
+  type LucideIcon,
+  Monitor,
+  ServerCog,
+} from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeader from "@/components/SectionHeader";
 import SectionLayout from "@/components/SectionLayout";
@@ -7,10 +14,11 @@ import { type SkillCategory, skillGroups, skills } from "@/content/skills";
 import styles from "./Skills.module.css";
 
 const groupIconMap: Record<SkillCategory, LucideIcon> = {
-  frontend: Monitor,
-  backend: Server,
   languages: Braces,
-  tools: Wrench,
+  data: Database,
+  ai: BrainCircuit,
+  web: Monitor,
+  tools: ServerCog,
 };
 
 function SkillGroupIcon({
@@ -38,10 +46,17 @@ export default function Skills() {
             skill.categories.includes(group.value),
           );
 
+          // Languages는 분야 카드 위에 가로로 긴 한 줄로 둔다
+          const isLanguages = group.value === "languages";
+
           return (
             <ScrollReveal
               key={group.value}
-              className={styles.group}
+              className={
+                isLanguages
+                  ? `${styles.group} ${styles.groupWide}`
+                  : styles.group
+              }
               delay={140 + index * 60}
             >
               <h3 className={styles.groupHeader}>

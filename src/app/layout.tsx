@@ -4,9 +4,9 @@ import CustomCursor from "@/components/CustomCursor";
 import Navigation from "@/components/Navigation";
 
 export const metadata: Metadata = {
-  title: "장은재 | Frontend Developer",
+  title: "장은재 | Data & AI Engineer",
   description:
-    "사용자 관점으로 문제를 해결하는 프론트엔드 개발자 장은재의 포트폴리오입니다.",
+    "데이터를 모으고, AI로 활용하고, 화면까지 직접 만드는 엔지니어 장은재의 포트폴리오입니다.",
 };
 
 export default function RootLayout({

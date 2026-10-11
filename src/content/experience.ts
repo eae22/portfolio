@@ -81,7 +81,7 @@ export const experiences: ExperienceItem[] = [
     tracks: ["Frontend", "AI"],
     period: { start: "2024.11", end: "2024.11" },
     summary: "CCTV 영상 속 카드를 탐지하는 분실물 관리 서비스",
-    // github: "", // TODO
+    // github: 레포(eae22/2024_ICONICTHON_TEAM_8_WEB)는 공개지만 README가 비어 있어 링크하지 않는다
     overview:
       "CCTV 영상에서 카드 객체를 실시간으로 탐지해 분실물을 관리하는 서비스입니다. AI융합대학 교내 해커톤에서 최우수상을 받았습니다.",
     features: [
@@ -94,7 +94,7 @@ export const experiences: ExperienceItem[] = [
         desc: "분실물 목록과 상세 조회, 관리자 페이지, CCTV 확인 화면을 제공합니다.",
       },
     ],
-    stack: ["React", "YOLO", "Python", "Figma"], // TODO: JavaScript인지 TypeScript인지 확인
+    stack: ["React", "JavaScript", "YOLO", "Python", "Figma"],
     roles: [
       "React 프론트엔드 전반 구현 (분실물 목록과 상세, 관리자 페이지, CCTV 확인 화면)",
       "YOLO 학습 데이터를 여러 구도로 직접 촬영하고 라벨링",
@@ -161,7 +161,7 @@ export const experiences: ExperienceItem[] = [
     tracks: ["Frontend", "AI"],
     period: { start: "2025.11", end: "2025.11" },
     summary: "자소서와 포트폴리오 기반 AI 면접 코칭 서비스",
-    // github: "", // TODO: 팀 레포 공개 여부 확인
+    // github: 레포(eae22/2025-X-Thon-Team7-Ayungieyong)는 공개지만 시연 영상과 TTS 주소를 정리한 뒤에 링크한다
     overview:
       "자소서와 포트폴리오를 바탕으로 면접 질문을 만들고, 여러 AI 에이전트가 토론해 면접을 평가하는 서비스입니다. 첨단융합대학 교내 해커톤 2025 X-Thon에서 대상을 받았습니다.",
     features: [
@@ -178,7 +178,7 @@ export const experiences: ExperienceItem[] = [
         desc: "면접 진행 화면에서 질문을 음성으로 읽어줍니다 (Cloudflare Workers TTS).",
       },
     ],
-    stack: ["React", "Cloudflare Workers", "Figma"], // TODO: 빌드 도구(CRA인지 Vite인지)와 JS/TS 확인
+    stack: ["React", "JavaScript", "Cloudflare Workers", "Figma"],
     roles: [
       "React 프로젝트 초기 세팅",
       "메인, 로그인, 회원가입 화면 구현",
@@ -242,8 +242,8 @@ export const experiences: ExperienceItem[] = [
     tracks: ["Frontend"],
     period: { start: "2026.02", end: "2026.06" },
     summary: "약, 음식, 영양제 상호작용을 확인하는 서비스",
-    // github: "", // TODO
-    // link: "",   // TODO: 배포 주소가 있으면
+    github: "https://github.com/eae22/2026-SDGs-Project-Yakjosim",
+    link: "https://demo-day-beta.vercel.app/",
     overview:
       "여러 약을 함께 복용하는 고령층이 늘면서 커지는 상호작용 위험에 주목해, 약과 음식과 영양제를 함께 먹어도 되는지 확인하는 서비스입니다.",
     features: [
@@ -266,7 +266,7 @@ export const experiences: ExperienceItem[] = [
     ],
     stack: ["React", "Vite", "TypeScript", "Figma"],
     roles: [
-      "프론트엔드 전체 구현 (온보딩, 검색과 조합 분석, 결과 화면)",
+      "온보딩, 검색, 조합 분석, 결과 화면 구현과 개편",
       "결과 리포트 PDF와 이미지 내보내기, 시니어 모드 UX",
       "드롭다운 재검색 버그 수정, 홍보용 목업 디자인",
     ],
@@ -285,7 +285,7 @@ export const experiences: ExperienceItem[] = [
     tracks: ["Data", "Frontend"],
     period: { start: "2026.03", end: "Present" },
     summary: "77개 역 상수도와 승하차 데이터 자동 수집 파이프라인",
-    // github: "", // TODO
+    // github: 기관 데이터 보안 때문에 레포를 공개하지 않는다
     overview:
       "서울교통공사와 협업해 지하철 역사의 상수도 사용량을 예측하고 이상을 탐지하는 4인 졸업 프로젝트입니다. 데이터 수집 자동화를 맡았습니다.",
     features: [
@@ -383,7 +383,7 @@ export const experiences: ExperienceItem[] = [
     period: { start: "2026.07", end: "Present" },
     summary:
       "로봇 자연어 지시 이해 모듈 단독 담당\n본선 진출, IEEE MetaCom 2026 워크숍 논문 채택",
-    // github: "", // TODO: 공개 가능 여부 확인
+    // github: 비공개 레포라 링크하지 않는다
     overview:
       "로봇이 사람의 자연어 지시를 이해해 물건을 찾아 배달하는 대회입니다. 5인 팀에서 자연어 이해 모듈을 단독으로 맡았고, 채점 환경은 인터넷이 차단된 CPU 전용 오프라인 환경이었습니다.",
     features: [

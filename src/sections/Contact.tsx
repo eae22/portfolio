@@ -4,10 +4,11 @@ import { Check, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeader from "@/components/SectionHeader";
+import { profileLinks } from "@/content/profile";
 
 type CopyStatus = "idle" | "copied" | "failed";
 
-const EMAIL = "eun0110@dgu.ac.kr";
+const EMAIL = profileLinks.email;
 const GMAIL_COMPOSE_URL =
   `https://mail.google.com/mail/?view=cm&fs=1` +
   `&to=${encodeURIComponent(EMAIL)}` +

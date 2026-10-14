@@ -232,6 +232,30 @@
   animation: section-filter-dot-pulse 2.7s var(--ease-out) infinite;
 }
 
+/* 점 대신 아이콘을 쓰는 버튼 (Experience 분야 필터) */
+.icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: color-mix(
+    in srgb,
+    var(--section-filter-accent) 70%,
+    var(--color-text-tertiary) 30%
+  );
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out);
+}
+
+.button:hover .icon {
+  transform: scale(1.08);
+}
+
+.button[data-active="true"] .icon {
+  color: color-mix(in srgb, white 22%, var(--section-filter-accent) 78%);
+  transform: scale(1.08);
+}
+
 .label {
   position: relative;
   letter-spacing: 0.01em;
@@ -286,12 +310,16 @@
   .button::after,
   .dot,
   .button[data-active="true"] .dot,
+  .icon,
+  .button[data-active="true"] .icon,
   .label {
     transition-duration: 0ms;
     animation: none;
   }
 
-  .button:hover {
+  .button:hover,
+  .button:hover .icon,
+  .button[data-active="true"] .icon {
     transform: none;
   }
 
@@ -312,4 +340,67 @@
   --section-filter-active-before-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.08), 0 14px 28px
     color-mix(in srgb, var(--section-filter-accent) 16%, transparent);
+}
+
+/* 보조 필터: 바깥 캡슐 없이 작은 태그로 보인다 (Experience 분야 필터) */
+.group[data-appearance="tags"] {
+  gap: 0.45rem;
+  align-items: center;
+  margin-bottom: 0;
+  padding: 0 0 0 0.5rem;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.visibleLabel {
+  margin-right: 0.35rem;
+  color: var(--color-text-tertiary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.group[data-appearance="tags"] .button {
+  --section-filter-button-padding-x: 0.85rem;
+  gap: 0.5rem;
+  padding-block: 0.4rem;
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
+.group[data-appearance="tags"] .button[data-active="true"] {
+  opacity: 1;
+}
+
+.group[data-appearance="tags"] .icon {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+/* 폰에서도 카테고리 칩보다 한 단계 작게 둔다 */
+@media (width <= 640px) {
+  .group[data-appearance="tags"] {
+    gap: 0.35rem;
+    padding-left: 0.25rem;
+  }
+
+  .visibleLabel {
+    margin-right: 0.25rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+  }
+
+  .group[data-appearance="tags"] .button {
+    --section-filter-button-padding-x: 0.65rem;
+    gap: 0.35rem;
+    padding-block: 0.3rem;
+    font-size: 0.75rem;
+  }
+
+  .group[data-appearance="tags"] .icon {
+    width: 0.8rem;
+    height: 0.8rem;
+  }
 }

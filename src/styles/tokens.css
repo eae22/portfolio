@@ -44,6 +44,9 @@
   --color-category-activity: #6ee7b7;
   --color-category-study: #fdba74;
 
+  /* experience area (Data, AI, Frontend 필터) */
+  --color-experience-area: #93c5fd;
+
   /* award / certificate */
   --color-award: #fcd34d;
   --color-certificate: #7dd3fc;

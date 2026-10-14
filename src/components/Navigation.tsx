@@ -218,7 +218,6 @@ export default function Navigation() {
   const handleNavClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
     id: string,
-    href: string,
   ) => {
     const target = document.getElementById(id);
     if (!target) return;
@@ -228,7 +227,12 @@ export default function Navigation() {
     clickedSectionRef.current = id;
     armClickRelease(clickedSectionRef, clickReleaseTimerRef);
     setActiveSection(id);
-    window.history.replaceState(null, "", href);
+    // Experience 분야 필터가 남긴 ?focus=... 는 지우지 않고 해시만 바꾼다
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${window.location.search}#${id}`,
+    );
     // 헤더 아래 여백은 globals.css의 scroll-padding-top 하나로 맞춘다 (직접 링크로 들어올 때와 같은 위치)
     target.scrollIntoView({ behavior: getScrollBehavior(), block: "start" });
   };
@@ -243,7 +247,11 @@ export default function Navigation() {
     clickedSectionRef.current = "top";
     armClickRelease(clickedSectionRef, clickReleaseTimerRef);
     setActiveSection(null);
-    window.history.replaceState(null, "", "/");
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${window.location.search}`,
+    );
     window.scrollTo({
       top: 0,
       behavior: getScrollBehavior(),
@@ -303,7 +311,7 @@ export default function Navigation() {
                   ref={(element) => {
                     itemRefs.current[item.id] = element;
                   }}
-                  onClick={(event) => handleNavClick(event, item.id, item.href)}
+                  onClick={(event) => handleNavClick(event, item.id)}
                   className={`block rounded-full px-4.5 py-2 transition-[color,transform,letter-spacing,opacity] duration-300 ${
                     isActive
                       ? "font-semibold tracking-[0.01em] text-white"
@@ -347,7 +355,7 @@ export default function Navigation() {
                   <Link
                     href={item.href}
                     onClick={(event) => {
-                      handleNavClick(event, item.id, item.href);
+                      handleNavClick(event, item.id);
                       setIsMenuOpen(false);
                     }}
                     aria-current={isActive ? "true" : undefined}

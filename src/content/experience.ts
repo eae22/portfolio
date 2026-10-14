@@ -10,7 +10,8 @@ export type ExperienceCategory = "Project" | "Activity" | "Study";
 
 export type ExperienceFilter = "all" | ExperienceCategory;
 
-export type ExperienceTrack = "Data" | "Frontend" | "AI";
+// 분야. 카테고리와 따로 여러 개를 골라 볼 수 있고, ?focus=data,ai 주소로 미리 고를 수 있다
+export type ExperienceArea = "Data" | "AI" | "Frontend";
 
 export interface ExperienceFilterOption {
   label: string;
@@ -43,7 +44,7 @@ export interface ExperienceItem {
   title: string;
   subtitle?: string;
   category: ExperienceCategory;
-  tracks?: ExperienceTrack[];
+  areas?: ExperienceArea[];
   period: ExperiencePeriod;
   ranking?: ExperienceRanking;
   summary: string;
@@ -64,6 +65,16 @@ export const experienceFilters: ExperienceFilterOption[] = [
   { label: "Study", value: "Study" },
 ];
 
+export const experienceAreas: {
+  label: string;
+  value: ExperienceArea;
+  param: string;
+}[] = [
+  { label: "Data", value: "Data", param: "data" },
+  { label: "AI", value: "AI", param: "ai" },
+  { label: "Frontend", value: "Frontend", param: "frontend" },
+];
+
 // 카테고리별 색 (tokens.css의 --color-category-*)
 export const experienceCategoryColors: Record<ExperienceCategory, string> = {
   Project: "var(--color-category-project)",
@@ -78,7 +89,7 @@ export const experiences: ExperienceItem[] = [
     title: "올라프",
     subtitle: "All Lost And Found",
     category: "Project",
-    tracks: ["Frontend", "AI"],
+    areas: ["Frontend", "AI", "Data"],
     period: { start: "2024.11", end: "2024.11" },
     summary: "CCTV 영상 속 카드를 탐지하는 분실물 관리 서비스",
     // github: 레포(eae22/2024_ICONICTHON_TEAM_8_WEB)는 공개지만 README가 비어 있어 링크하지 않는다
@@ -116,7 +127,7 @@ export const experiences: ExperienceItem[] = [
     title: "퍼스널컬러 측정 시스템",
     subtitle: "인간컴퓨터상호작용 수업 · 4인",
     category: "Project",
-    tracks: ["AI", "Frontend"],
+    areas: ["AI", "Frontend", "Data"],
     period: { start: "2025.05", end: "2025.06" },
     summary: "셀카로 퍼스널컬러를 진단하고 상의 색 어울림을 판정하는 시스템",
     github: "https://github.com/eae22/SSEOP",
@@ -158,7 +169,7 @@ export const experiences: ExperienceItem[] = [
     title: "AICO",
     subtitle: "AI 면접 코치",
     category: "Project",
-    tracks: ["Frontend", "AI"],
+    areas: ["Frontend", "AI"],
     period: { start: "2025.11", end: "2025.11" },
     summary: "자소서와 포트폴리오 기반 AI 면접 코칭 서비스",
     // github: 레포(eae22/2025-X-Thon-Team7-Ayungieyong)는 공개지만 시연 영상과 TTS 주소를 정리한 뒤에 링크한다
@@ -197,7 +208,7 @@ export const experiences: ExperienceItem[] = [
     title: "영화 탐색 및 추천 시스템",
     subtitle: "데이터베이스설계 수업 · 2인",
     category: "Project",
-    tracks: ["Data", "Frontend"],
+    areas: ["Data", "Frontend"],
     period: { start: "2025.11", end: "2025.12" },
     summary: "MySQL 설계와 그룹 통계 기반 추천 API",
     // github: "", // TODO
@@ -239,7 +250,7 @@ export const experiences: ExperienceItem[] = [
     title: "약조심",
     subtitle: "GDGoC SDGs 팀 프로젝트",
     category: "Project",
-    tracks: ["Frontend"],
+    areas: ["Frontend"],
     period: { start: "2026.02", end: "2026.06" },
     summary: "약, 음식, 영양제 상호작용을 확인하는 서비스",
     github: "https://github.com/eae22/2026-SDGs-Project-Yakjosim",
@@ -282,7 +293,7 @@ export const experiences: ExperienceItem[] = [
     title: "물샘이",
     subtitle: "서울교통공사 협업 졸업 프로젝트",
     category: "Project",
-    tracks: ["Data", "Frontend"],
+    areas: ["Data", "Frontend"],
     period: { start: "2026.03", end: "Present" },
     summary: "77개 역 상수도와 승하차 데이터 자동 수집 파이프라인",
     // github: 기관 데이터 보안 때문에 레포를 공개하지 않는다
@@ -333,7 +344,7 @@ export const experiences: ExperienceItem[] = [
     title: "AI Agent 행동 의사결정 예측 챌린지",
     subtitle: "정보통신기획평가원 주최 · 데이콘 주관 · 4인 팀",
     category: "Project",
-    tracks: ["AI"],
+    areas: ["AI", "Data"],
     period: { start: "2026.07", end: "2026.07" },
     ranking: { place: 22, total: 269 },
     summary: "에이전트 행동 14종 예측 모델\nF1 0.736→0.779, 추론 4.1배 가속",
@@ -379,7 +390,7 @@ export const experiences: ExperienceItem[] = [
     title: "MARC 2026",
     subtitle: "MetaSejong AI Robot Challenge",
     category: "Project",
-    tracks: ["AI"],
+    areas: ["AI"],
     period: { start: "2026.07", end: "Present" },
     summary:
       "로봇 자연어 지시 이해 모듈 단독 담당\n본선 진출, IEEE MetaCom 2026 워크숍 논문 채택",
@@ -472,7 +483,7 @@ export const experiences: ExperienceItem[] = [
     id: "gdgoc",
     title: "GDGoC 동국대학교 Web/App 파트",
     category: "Activity",
-    tracks: ["Frontend"],
+    areas: ["Frontend"],
     period: { start: "2025.09", end: "2026.06" },
     summary: "프론트엔드 세션 발표, 전체 세미나 발표, 약조심 팀 프로젝트",
     overview:
@@ -498,7 +509,7 @@ export const experiences: ExperienceItem[] = [
     id: "boaz",
     title: "BOAZ 데이터 엔지니어링 파트",
     category: "Activity",
-    tracks: ["Data"],
+    areas: ["Data"],
     period: { start: "2026.01", end: "Present" },
     summary: "Hadoop과 Spark 분산 처리 세션 진행\n7주 기술 블로그",
     // link: "", // TODO: 블로그 시리즈 링크
@@ -531,7 +542,7 @@ export const experiences: ExperienceItem[] = [
     id: "comento-frontend",
     title: "코멘토 프론트엔드 직무 부트캠프",
     category: "Study",
-    tracks: ["Frontend"],
+    areas: ["Frontend"],
     period: { start: "2025.12", end: "2026.01" },
     summary: "현직자 피드백을 받으며 5주간 매주 웹 과제 구현",
     overview:
@@ -555,7 +566,7 @@ export const experiences: ExperienceItem[] = [
     title: "LG Aimers 9기",
     subtitle: "LG AI연구원 주최 · 데이콘 주관 온라인 해커톤 · 4인 팀",
     category: "Study",
-    tracks: ["AI", "Data"],
+    areas: ["AI", "Data"],
     period: { start: "2026.06", end: "2026.09" },
     ranking: { place: 58, total: 1090 },
     summary:
@@ -603,7 +614,7 @@ export const experiences: ExperienceItem[] = [
     title: "코멘토 데이터 엔지니어 부트캠프",
     subtitle: "코멘토 직무 부트캠프 · 5주 과정 · 개인 과제",
     category: "Study",
-    tracks: ["Data"],
+    areas: ["Data"],
     period: { start: "2026.07", end: "2026.08" },
     summary: "DB 설계·보안·성능 개선·이관 파이프라인 5주 실무 과제",
     overview:

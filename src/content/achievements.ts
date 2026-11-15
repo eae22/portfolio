@@ -30,7 +30,7 @@ export const certificates: Certificate[] = [
   },
   {
     name: "AWS Certified AI Practitioner",
-    issuer: "Amazon Web Services",
+    issuer: "Amazon Web Services(AWS)",
     date: "2026.01.19",
   },
   {

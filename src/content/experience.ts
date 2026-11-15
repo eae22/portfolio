@@ -391,7 +391,7 @@ export const experiences: ExperienceItem[] = [
     subtitle: "MetaSejong AI Robot Challenge",
     category: "Project",
     areas: ["AI"],
-    period: { start: "2026.07", end: "Present" },
+    period: { start: "2026.07", end: "2026.11" },
     summary:
       "로봇 자연어 지시 이해 모듈 단독 담당\n본선 진출, IEEE MetaCom 2026 워크숍 논문 채택",
     // github: 비공개 레포라 링크하지 않는다

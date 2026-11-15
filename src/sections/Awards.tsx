@@ -96,7 +96,15 @@ export default function Awards() {
                 <span className={styles.itemDate}>
                   {formatAchievementDate(certificate.date)}
                 </span>
-                <p className={styles.itemMeta}>{certificate.issuer}</p>
+                <p className={styles.itemMeta}>
+                  <span>{certificate.issuer}</span>
+                  {certificate.detail ? (
+                    <>
+                      <span aria-hidden="true">·</span>
+                      <span>{certificate.detail}</span>
+                    </>
+                  ) : null}
+                </p>
               </li>
             ))}
           </ul>

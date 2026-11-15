@@ -4,6 +4,8 @@ export interface Certificate {
   name: string;
   issuer: string;
   date: string;
+  // 기관 옆에 붙는 짧은 정보 (점수 등)
+  detail?: string;
 }
 
 export interface Award {
@@ -31,6 +33,12 @@ export const certificates: Certificate[] = [
     issuer: "Amazon Web Services",
     date: "2026.01.19",
   },
+  {
+    name: "TOPCIT (ICT역량지수평가) 수준 3",
+    issuer: "정보통신기획평가원",
+    date: "2026.11.09",
+    detail: "570점",
+  },
 ];
 
 export const awards: Award[] = [
@@ -54,6 +62,13 @@ export const awards: Award[] = [
     issuer: "동국대학교 사물인터넷 혁신융합대학사업단",
     date: "2026.06.19",
     project: "mulsaemi",
+  },
+  {
+    name: "MARC 2026 Honorable Mention",
+    shortName: "Honorable Mention",
+    issuer: "MARC 2026 조직위원회 (IEEE MetaCom 2026)",
+    date: "2026.11.07",
+    project: "marc-2026",
   },
 ];
 
